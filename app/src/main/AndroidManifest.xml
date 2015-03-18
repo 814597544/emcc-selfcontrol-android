@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="app.emcc_selfcontrol_android" >
+
+
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:targetSdkVersion="21"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/app_theme">
+        <activity
+            android:name="app.emcc_selfcontrol_android.Activity.HomeActivity"
+            android:label="@string/app_name">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="app.emcc_selfcontrol_android.Activity.ExpandableActivity"/>
+        <activity android:name="app.emcc_selfcontrol_android.Activity.ZKLActivity" />
+        <activity android:name="app.emcc_selfcontrol_android.Activity.ZoneActivity" />
+        <activity android:name="app.emcc_selfcontrol_android.Activity.AddDreamActivity" />
+        <activity android:name="app.emcc_selfcontrol_android.Activity.LoginActivity" />
+        <activity android:name="app.emcc_selfcontrol_android.Activity.EditTimeActivity"
+            android:theme="@android:style/Theme.Translucent"/>
+        <activity android:name="app.emcc_selfcontrol_android.Activity.CalendarActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            />
+    </application>
+
+</manifest>

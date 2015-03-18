@@ -1,0 +1,7 @@
+include ':app'
+include ':library'
+include ':circular'
+include ':progressLibrary'
+include ':calendarLibrary'
+include ':tabLibrary'
+include ':caldroid'
