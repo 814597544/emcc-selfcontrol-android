@@ -8,7 +8,7 @@
     <View
         android:id="@+id/ebm__menu_overlay"
         android:layout_width="match_parent"
-        android:background="#ddffffff"
+        android:background="#eeffffff"
         android:layout_height="match_parent"/>
 <LinearLayout
     android:layout_width="fill_parent"

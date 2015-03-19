@@ -196,7 +196,7 @@ public class ExpandableButtonMenu extends RelativeLayout implements View.OnClick
     public void setMenuButtonImage(MenuButton button, Drawable drawable) {
         switch (button) {
             case MID:
-                mMidBtn.setImageDrawable(drawable);
+                mMidBtn.setBackgroundResource(R.drawable.ic_launcher);
                 break;
             case LEFT:
                 mLeftBtn.setImageDrawable(drawable);
@@ -353,11 +353,14 @@ public class ExpandableButtonMenu extends RelativeLayout implements View.OnClick
                 buttonDistanceX = a.getFloat(R.styleable.ExpandableMenuOverlay_distanceX, DEFAULT_BUTTON_DISTANCE_X);
 
                 // button resources
-                mCloseBtn.setBackgroundResource(a.getResourceId(R.styleable.ExpandableMenuOverlay_closeButtonSrc, 0));
+               /* mCloseBtn.setBackgroundResource(a.getResourceId(R.styleable.ExpandableMenuOverlay_closeButtonSrc, 0));
                 mLeftBtn.setBackgroundResource(a.getResourceId(R.styleable.ExpandableMenuOverlay_leftButtonSrc, 0));
-                mRightBtn.setBackgroundResource(a.getResourceId(R.styleable.ExpandableMenuOverlay_rightButtonSrc, 0));
-                mMidBtn.setBackgroundResource(a.getResourceId(R.styleable.ExpandableMenuOverlay_midButtonSrc, 0));
-
+                mRightBtn.setBackgroundResource(a.getResourceId(R.styleable.ExpandableMenuOverlay_rightButtonSrc, 0));*/
+              /*  mMidBtn.setBackgroundResource(a.getResourceId(R.styleable.ExpandableMenuOverlay_midButtonSrc, 0));*/
+                mRightBtn.setBackgroundResource(R.drawable.a1);
+                mCloseBtn.setBackgroundResource(R.drawable.a2);
+                mLeftBtn.setBackgroundResource(R.drawable.a3);
+                mMidBtn.setBackgroundResource(R.drawable.a2);
                 // button text
                 mLeftText.setText(a.getResourceId(R.styleable.ExpandableMenuOverlay_leftButtonText, R.string.empty));
                 mRightText.setText(a.getResourceId(R.styleable.ExpandableMenuOverlay_rightButtonText, R.string.empty));
@@ -420,7 +423,7 @@ public class ExpandableButtonMenu extends RelativeLayout implements View.OnClick
     /**
      * Collapse and expand animation duration
      */
-    private static final int ANIMATION_DURATION = 300;
+    private static final int ANIMATION_DURATION = 600;
 
     /**
      * Used interpolators

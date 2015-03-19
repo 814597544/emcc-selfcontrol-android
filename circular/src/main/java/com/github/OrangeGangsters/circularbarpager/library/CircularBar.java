@@ -192,10 +192,10 @@ public class CircularBar extends View {
     /**
      * The defaults for width and color of the reached and outline arcs
      */
-    private final int default_clockwise_reached_color = Color.parseColor("#28adc0");
-    private final int default_clockwise_outline_color = Color.parseColor("#98dee8");
-    private final int default_counter_clockwise_reached_color = Color.parseColor("#98dee8");
-    private final int default_counter_clockwise_outline_color = Color.parseColor("#28adc0");
+    private final int default_clockwise_reached_color = Color.parseColor("#ccffffff");
+    private final int default_clockwise_outline_color = Color.parseColor("#ffaa66cc");
+    private final int default_counter_clockwise_reached_color = Color.parseColor("#ccffffff");
+    private final int default_counter_clockwise_outline_color = Color.parseColor("#ff99cc00");
     private final float default_reached_arc_width;
     private final float default_outline_arc_width;
 

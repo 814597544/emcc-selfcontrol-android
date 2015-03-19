@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ebm="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
-    android:background="#ffffff"
+    android:background="@color/very_light_grey"
     android:layout_height="fill_parent" >
 
     <TabHost
@@ -29,33 +29,28 @@
         </LinearLayout>
     </TabHost>
 
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="50dp"
+    android:gravity="center"
 
+    android:layout_alignParentBottom="true" >
 
     <lt.lemonlabs.android.expandablebuttonmenu.ExpandableMenuOverlay
         android:id="@+id/button_menu"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="2dp"
-        android:src="@drawable/circle_home"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
 
+
+        android:src="@drawable/b"
         ebm:dimAmount="0.8"
-
-        ebm:mainButtonSize="0.12"
-        ebm:otherButtonSize="0.12"
-        ebm:distanceY="0.4"
+        ebm:mainButtonSize="0.14"
+        ebm:otherButtonSize="0.14"
+        ebm:distanceY="0.3"
         ebm:distanceX="0.28"
-        ebm:bottomPad="0.001"
-
-        ebm:closeButtonSrc="@drawable/circle_close"
-        ebm:leftButtonSrc="@drawable/circle_1"
-        ebm:midButtonSrc="@drawable/circle_2"
-        ebm:rightButtonSrc="@drawable/circle_3"
-
+        ebm:bottomPad="0.006"
         ebm:leftButtonText="@string/action_left"
         ebm:midButtonText="@string/action_mid"
         ebm:rightButtonText="@string/action_right"/>
-
-
+</RelativeLayout>
 </RelativeLayout>

@@ -12,6 +12,7 @@ import android.widget.PopupWindow;
 import android.widget.TabHost;
 import android.widget.TextView;
 import app.emcc_selfcontrol_android.R;
+import de.hdodenhof.circleimageview.CircleImageView;
 import lt.lemonlabs.android.expandablebuttonmenu.ExpandableButtonMenu;
 import lt.lemonlabs.android.expandablebuttonmenu.ExpandableMenuOverlay;
 
@@ -24,13 +25,15 @@ import lt.lemonlabs.android.expandablebuttonmenu.ExpandableMenuOverlay;
 public class HomeActivity extends TabActivity {
     private ExpandableMenuOverlay menuOverlay;
     private PopupWindow popupWindow;
+
 	TabHost tabHost;
 	/** Called when the activity is first created. */
-	
+	/*11111*/
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
         menuOverlay = (ExpandableMenuOverlay) findViewById(R.id.button_menu);
+
 		tabHost = getTabHost();
 		setTabs();
         menuOverlay.setOnMenuButtonClickListener(new ExpandableButtonMenu.OnMenuButtonClick() {
@@ -52,8 +55,8 @@ public class HomeActivity extends TabActivity {
 	}
 	private void setTabs()
 	{
-		addTab("自控力", R.drawable.tab_search, ZKLActivity.class);
-		addTab("精英圈", R.drawable.tab_search, ZoneActivity.class);
+		addTab("自控力", R.drawable.zkl_unclick, ZKLActivity.class);
+		addTab("精英圈", R.drawable.zone_unclick, ZoneActivity.class);
 	}
 	private void addTab(String labelId, int drawableId, Class<?> c)
 	{

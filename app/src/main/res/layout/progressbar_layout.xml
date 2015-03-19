@@ -28,7 +28,7 @@ limitations under the License.
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="20dp"
@@ -48,12 +48,24 @@ limitations under the License.
                 android:textColor="#037083"
                 android:text="梦想"
                 android:layout_marginRight="10dp"/>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="28dp"
+                android:layout_weight="7"
+                android:padding="2dp"
+                android:orientation="horizontal"
+                android:background="@drawable/progressbar_bg"
+                android:gravity="center_vertical">
+
+
             <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
                 android:id="@+id/progress_two"
-                android:layout_width="250dp"
-                android:layout_height="30dp"
+                android:layout_width="fill_parent"
+                android:layout_height="16dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 app:rcMax="10"
-                android:layout_weight="7"
                 app:rcProgress="0"
                 app:rcSecondaryProgress="0" />
 
@@ -67,11 +79,11 @@ limitations under the License.
                 android:layout_marginLeft="10dp"/>
         </LinearLayout>
 
+        </LinearLayout>
 
 
 
-
-        <LinearLayout
+      <!--  <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -89,8 +101,8 @@ limitations under the License.
                 android:layout_marginRight="10dp"
                 />
             <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
-                android:layout_width="250dp"
-                android:layout_height="30dp"
+                android:layout_width="fill_parent"
+                android:layout_height="23dp"
                 app:rcMax="10"
                 android:layout_weight="7"
                 app:rcProgress="0"
@@ -104,10 +116,10 @@ limitations under the License.
                 android:layout_weight="1"
                 android:text="9小时"
                 android:layout_marginLeft="10dp"/>
-        </LinearLayout>
+        </LinearLayout>-->
 
 
-        <LinearLayout
+       <!-- <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -124,8 +136,8 @@ limitations under the License.
                 android:text="浪费"
                 android:layout_marginRight="10dp"/>
             <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
-                android:layout_width="250dp"
-                android:layout_height="30dp"
+                android:layout_width="fill_parent"
+                android:layout_height="23dp"
                 app:rcMax="10"
                 android:layout_weight="7"
                 app:rcProgress="0"
@@ -140,7 +152,7 @@ limitations under the License.
                 android:text="6小时"
                 android:layout_marginLeft="10dp"/>
         </LinearLayout>
-
+-->
 
 
 

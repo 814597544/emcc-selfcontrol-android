@@ -3,15 +3,19 @@ package app.emcc_selfcontrol_android.Activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import app.emcc_selfcontrol_android.Adapter.CircularPagerAdapter;
 import app.emcc_selfcontrol_android.R;
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 import com.github.OrangeGangsters.circularbarpager.library.CircularBarPager;
 import com.nineoldandroids.animation.Animator;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.viewpagerindicator.CirclePageIndicator;
 
 /**
@@ -21,7 +25,7 @@ import com.viewpagerindicator.CirclePageIndicator;
 public class ZKLActivity extends Activity {
     private RoundCornerProgressBar progressTwo;
 
-
+    private CircleImageView circleIcon;
     private int progress2 = 5;
     private CircularBarPager mCircularBarPager;
     TextView titleName;
@@ -36,6 +40,8 @@ public class ZKLActivity extends Activity {
         setContentView(R.layout.zkl_layout);
         titleName=(TextView) findViewById(R.id.title);
         titleName.setText("自控力");
+        circleIcon=(CircleImageView) findViewById(R.id.circleIcon);
+        ImageLoader.getInstance().displayImage("https://coding.net/static/fruit_avatar/Fruit-1.png", circleIcon);
         Toast.makeText(getApplicationContext(),"oncreat",Toast.LENGTH_SHORT).show();
         progressTwo = (RoundCornerProgressBar) findViewById(R.id.progress_two);
         progressTwo.setBackgroundColor(getResources().getColor(R.color.custom_progress_background));

@@ -19,14 +19,15 @@ android {
     buildToolsVersion "21.1"
     defaultConfig {
 
-        minSdkVersion 10
+        minSdkVersion 14
         targetSdkVersion 21
     }
 }
 
 dependencies {
     compile 'com.android.support:appcompat-v7:19.1.0'
-
+    compile 'de.hdodenhof:circleimageview:1.2.0'
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
     compile project(':library')
     compile project( ':circular')
     compile project(':progressLibrary')
