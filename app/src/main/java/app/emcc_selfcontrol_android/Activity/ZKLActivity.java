@@ -1,6 +1,7 @@
 package app.emcc_selfcontrol_android.Activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -42,10 +43,14 @@ public class ZKLActivity extends Activity {
         titleName.setText("自控力");
         circleIcon=(CircleImageView) findViewById(R.id.circleIcon);
         ImageLoader.getInstance().displayImage("https://coding.net/static/fruit_avatar/Fruit-1.png", circleIcon);
-        Toast.makeText(getApplicationContext(),"oncreat",Toast.LENGTH_SHORT).show();
         progressTwo = (RoundCornerProgressBar) findViewById(R.id.progress_two);
         progressTwo.setBackgroundColor(getResources().getColor(R.color.custom_progress_background));
-
+        circleIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ZKLActivity.this,UserInfoActivity.class));
+            }
+        });
         updateProgressTwo();
         initViews();
     }

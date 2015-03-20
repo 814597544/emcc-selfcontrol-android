@@ -63,27 +63,14 @@ public class CalendarActivity extends FragmentActivity {
             args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
             args.putBoolean(CaldroidFragment.ENABLE_SWIPE, true);
             args.putBoolean(CaldroidFragment.SIX_WEEKS_IN_CALENDAR, true);
-
-            // Uncomment this to customize startDayOfWeek
-            // args.putInt(CaldroidFragment.START_DAY_OF_WEEK,
-            // CaldroidFragment.TUESDAY); // Tuesday
-
-            // Uncomment this line to use Caldroid in compact mode
-            // args.putBoolean(CaldroidFragment.SQUARE_TEXT_VIEW_CELL, false);
-
             caldroidFragment.setArguments(args);
         }
 
         setCustomResourceForDates();
-
-        // Attach to the activity
         FragmentTransaction t = getSupportFragmentManager().beginTransaction();
         t.replace(R.id.calendar1, caldroidFragment);
         t.commit();
-
-        // Setup listener
         final CaldroidListener listener = new CaldroidListener() {
-
             @Override
             public void onSelectDate(Date date, View view) {
                 Toast.makeText(getApplicationContext(), formatter.format(date),

@@ -1,0 +1,151 @@
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <include layout="@layout/home_head2"/>
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:background="#f8ffffff"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginBottom="20dp">
+
+        <RelativeLayout
+            android:id="@+id/userInfo"
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/navigation_my_bg" />
+
+            <View
+                android:layout_centerVertical="true"
+                android:layout_width="53dp"
+                android:layout_height="53dp"
+                android:src="@drawable/navigation_user_sharow"
+                android:layout_marginLeft="30dp"
+                android:visibility="gone" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/circleIcon"
+                android:layout_centerVertical="true"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="16dp"
+                android:src="@drawable/coding_emoji_04"
+                android:layout_marginLeft="16dp" />
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/circleIcon"
+                android:text="李宁"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:id="@+id/sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/name"
+                android:layout_marginTop="6dp"
+                android:layout_toRightOf="@id/circleIcon"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="一切皆有可能一切皆有可能一"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                 />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:padding="0.5dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/fansLayout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#00ffffff"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="粉丝"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#6d7e96" />
+
+                <TextView
+                    android:id="@+id/fans"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="0"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#3bbd79" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="18dp"
+                android:layout_gravity="center_vertical"
+                android:background="#ff243040" />
+
+            <LinearLayout
+                android:id="@+id/followsLayout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="0.5dp"
+                android:layout_weight="1"
+                android:background="#00ffffff"
+                android:gravity="center">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="关注"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#6d7e96" />
+
+                <TextView
+                    android:id="@+id/follows"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="0"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#3bbd79" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <include
+            layout="@layout/userinfo_list_layout"/>
+
+
+
+
+    </LinearLayout>
+</ScrollView>
+</LinearLayout>

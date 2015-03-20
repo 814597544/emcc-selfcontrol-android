@@ -34,6 +34,7 @@
             android:name="app.emcc_selfcontrol_android.Activity.ExpandableActivity"/>
         <activity android:name="app.emcc_selfcontrol_android.Activity.ZKLActivity" />
         <activity android:name="app.emcc_selfcontrol_android.Activity.ZoneActivity" />
+        <activity android:name="app.emcc_selfcontrol_android.Activity.UserInfoActivity" />
         <activity android:name="app.emcc_selfcontrol_android.Activity.AddDreamActivity" />
         <activity android:name="app.emcc_selfcontrol_android.Activity.LoginActivity" />
         <activity android:name="app.emcc_selfcontrol_android.Activity.EditTimeActivity"

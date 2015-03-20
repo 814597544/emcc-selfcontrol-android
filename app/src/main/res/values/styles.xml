@@ -17,4 +17,21 @@
         <item name="progress_arc_clockwise_width">8dp</item>
         <item name="progress_arc_counter_clockwise_width">8dp</item>
     </style>
+    <style name="common_edittext">
+        <item name="android:textColor">@color/common_black_80</item>
+        <item name="android:textColorHint">@color/common_login_hint</item>
+        <item name="android:background">@null</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_marginLeft">5.0dip</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:drawablePadding">5.0dip</item>
+        <item name="android:textCursorDrawable">@null</item>
+    </style>
+    <style name="line2">
+        <item name="android:background">#ffcccccc</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">1.0px</item>
+    </style>
 </resources>
