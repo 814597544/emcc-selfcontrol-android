@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="app.emcc_selfcontrol_android" >
-
-
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="21"/>
@@ -22,6 +20,7 @@
         android:theme="@style/app_theme">
         <activity
             android:name="app.emcc_selfcontrol_android.Activity.HomeActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name">
 
             <intent-filter>
@@ -32,19 +31,30 @@
         </activity>
         <activity
             android:name="app.emcc_selfcontrol_android.Activity.ExpandableActivity"/>
-        <activity android:name="app.emcc_selfcontrol_android.Activity.ZKLActivity" />
-        <activity android:name="app.emcc_selfcontrol_android.Activity.ZoneActivity" />
-        <activity android:name="app.emcc_selfcontrol_android.Activity.UserInfoActivity" />
-        <activity android:name="app.emcc_selfcontrol_android.Activity.AddDreamActivity" />
-        <activity android:name="app.emcc_selfcontrol_android.Activity.LoginActivity" />
-        <activity android:name="app.emcc_selfcontrol_android.Activity.RegisterActivity" />
-        <activity android:name="app.emcc_selfcontrol_android.Activity.DreamingActivity" />
-        <activity android:name="app.emcc_selfcontrol_android.Activity.DreamedActivity" />
+        <activity android:name="app.emcc_selfcontrol_android.Activity.ZKLActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="app.emcc_selfcontrol_android.Activity.ZoneActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="app.emcc_selfcontrol_android.Activity.UserInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="app.emcc_selfcontrol_android.Activity.AddDreamActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="app.emcc_selfcontrol_android.Activity.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="app.emcc_selfcontrol_android.Activity.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="app.emcc_selfcontrol_android.Activity.DreamingActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="app.emcc_selfcontrol_android.Activity.DreamedActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="app.emcc_selfcontrol_android.Activity.SettingActivity"
+            android:screenOrientation="portrait" />
         <activity android:name="app.emcc_selfcontrol_android.Activity.EditTimeActivity"
-            android:theme="@android:style/Theme.Translucent"/>
+            android:theme="@android:style/Theme.Translucent"
+            android:screenOrientation="portrait" />
         <activity android:name="app.emcc_selfcontrol_android.Activity.CalendarActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"
-            />
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

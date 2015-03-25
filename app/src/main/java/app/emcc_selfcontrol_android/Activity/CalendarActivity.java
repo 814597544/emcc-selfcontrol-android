@@ -17,6 +17,7 @@ import java.util.Date;
 
 public class CalendarActivity extends FragmentActivity {
     private CaldroidFragment caldroidFragment;
+    private AndroidSegmentedControlView tabs;
 /*    private CaldroidFragment dialogCaldroidFragment;*/
     private void setCustomResourceForDates() {
         Calendar cal = Calendar.getInstance();
@@ -45,12 +46,20 @@ public class CalendarActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendar_layout);
         final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
-
+        tabs=(AndroidSegmentedControlView)findViewById(R.id.tabs);
         // Setup caldroid fragment
         // **** If you want normal CaldroidFragment, use below line ****
         caldroidFragment = new CaldroidFragment();
 
+        tabs.setOnSelectionChangedListener(new AndroidSegmentedControlView.OnSelectionChangedListener() {
+            @Override
+            public void newSelection(String identifier, String value) {
 
+
+
+
+            }
+        });
         if (savedInstanceState != null) {
             caldroidFragment.restoreStatesFromKey(savedInstanceState,
                     "CALDROID_SAVED_STATE");

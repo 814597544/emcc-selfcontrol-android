@@ -118,7 +118,7 @@
         <View style="@style/line2" />
 
         <RelativeLayout
-            android:id="@+id/my_message"
+            android:id="@+id/setting"
             android:layout_width="fill_parent"
             android:layout_height="49dp"
             android:background="@drawable/listitem_selector"

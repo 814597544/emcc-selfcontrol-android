@@ -40,6 +40,12 @@
 
     </LinearLayout>
 
+
+
+    <ViewSwitcher
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
     <LinearLayout
         android:id="@+id/calendar1"
         android:layout_width="match_parent"
@@ -47,8 +53,10 @@
         android:orientation="vertical" >
     </LinearLayout>
 
+        <include layout="@layout/photo_tab"/>
 
 
+    </ViewSwitcher>
 
 
 

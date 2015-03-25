@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginBottom="10dp">
+     >
 
         <RelativeLayout
             android:id="@+id/userInfo"
@@ -106,7 +106,17 @@
                             android:background="@drawable/cartoon_run"/>
 
 
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_horizontal|bottom"
+                        android:layout_weight="1">
 
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/identity"/>
 
 
                     </LinearLayout>
@@ -121,7 +131,23 @@
                             android:layout_width="90dp"
                             android:layout_height="90dp"
                             android:background="@drawable/cartoon_run"/>
+
+
                     </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_horizontal|bottom"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/identity"/>
+                    </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
@@ -133,8 +159,20 @@
                             android:layout_height="90dp"
                             android:background="@drawable/cartoon_run"/>
 
-                    </LinearLayout>
 
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_horizontal|bottom"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/award"/>
+
+                    </LinearLayout>
 
 
 
@@ -166,13 +204,72 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:orientation="horizontal"
-                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="3dp"
                 android:background="#E8E8E8"
                 android:layout_weight="1"
                 >
 
 
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="5dp"
+                    android:background="@drawable/line">
+                    
+                    
+                    </LinearLayout>
+
+
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/main_color"
+                        android:textSize="15sp"
+                        android:text="过英语四级"
+                        android:layout_marginLeft="15dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/main_color"
+                        android:textSize="15sp"
+                        android:text="共拼搏了20小时"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/main_color"
+                        android:textSize="15sp"
+                        android:text="完成梦想的80%"
+                        android:layout_marginRight="15dp"/>
+
+                    </RelativeLayout>
+
+
+
+                    <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+                        android:id="@+id/progress_two"
+                        android:layout_width="fill_parent"
+                        android:layout_height="16dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        app:rcMax="10"
+                        app:rcProgress="5"
+                        app:rcSecondaryProgress="0" />
 
 
 

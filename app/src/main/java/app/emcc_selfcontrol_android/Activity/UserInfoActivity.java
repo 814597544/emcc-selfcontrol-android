@@ -20,11 +20,13 @@ public class UserInfoActivity extends Activity{
     TextView titleName;
     RelativeLayout dreaming;
     RelativeLayout dreamed;
+    RelativeLayout setting;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_info);
         dreaming=(RelativeLayout)findViewById(R.id.dreaming);
         dreamed=(RelativeLayout)findViewById(R.id.dreamed);
+        setting=(RelativeLayout)findViewById(R.id.setting);
         titleName=(TextView) findViewById(R.id.title);
         titleName.setText("个人中心");
 
@@ -38,6 +40,12 @@ public class UserInfoActivity extends Activity{
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(UserInfoActivity.this,DreamedActivity.class));
+            }
+        });
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(UserInfoActivity.this,SettingActivity.class));
             }
         });
     }
