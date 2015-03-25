@@ -48,7 +48,7 @@ public class ZKLActivity extends Activity {
         circleIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ZKLActivity.this,UserInfoActivity.class));
+                startActivity(new Intent(ZKLActivity.this,LoginActivity.class));
             }
         });
         updateProgressTwo();

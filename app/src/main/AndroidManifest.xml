@@ -4,7 +4,7 @@
 
 
     <uses-sdk
-        android:minSdkVersion="15"
+        android:minSdkVersion="8"
         android:targetSdkVersion="21"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -37,6 +37,9 @@
         <activity android:name="app.emcc_selfcontrol_android.Activity.UserInfoActivity" />
         <activity android:name="app.emcc_selfcontrol_android.Activity.AddDreamActivity" />
         <activity android:name="app.emcc_selfcontrol_android.Activity.LoginActivity" />
+        <activity android:name="app.emcc_selfcontrol_android.Activity.RegisterActivity" />
+        <activity android:name="app.emcc_selfcontrol_android.Activity.DreamingActivity" />
+        <activity android:name="app.emcc_selfcontrol_android.Activity.DreamedActivity" />
         <activity android:name="app.emcc_selfcontrol_android.Activity.EditTimeActivity"
             android:theme="@android:style/Theme.Translucent"/>
         <activity android:name="app.emcc_selfcontrol_android.Activity.CalendarActivity"

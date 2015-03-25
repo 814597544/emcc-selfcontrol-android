@@ -92,7 +92,7 @@
                             android:layout_marginRight="5dp"
                             android:gravity="center_vertical"
                             app:rcMax="10"
-                            app:rcProgress="0"
+                            app:rcProgress="5"
                             app:rcSecondaryProgress="0" />
                     </LinearLayout>
                 </LinearLayout>
@@ -153,7 +153,7 @@
                         android:layout_marginRight="5dp"
                         android:gravity="center_vertical"
                         app:rcMax="10"
-                        app:rcProgress="0"
+                        app:rcProgress="6"
                         app:rcSecondaryProgress="0" />
                 </LinearLayout>
 
@@ -214,7 +214,7 @@
                             android:layout_marginRight="5dp"
                             android:gravity="center_vertical"
                             app:rcMax="10"
-                            app:rcProgress="0"
+                            app:rcProgress="7"
                             app:rcSecondaryProgress="0" />
 
                     </LinearLayout>

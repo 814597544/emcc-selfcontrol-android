@@ -1,8 +1,11 @@
 package app.emcc_selfcontrol_android.Activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -15,13 +18,27 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class UserInfoActivity extends Activity{
     TextView titleName;
-    private CircleImageView circleIcon;
+    RelativeLayout dreaming;
+    RelativeLayout dreamed;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_info);
+        dreaming=(RelativeLayout)findViewById(R.id.dreaming);
+        dreamed=(RelativeLayout)findViewById(R.id.dreamed);
         titleName=(TextView) findViewById(R.id.title);
         titleName.setText("个人中心");
-        circleIcon=(CircleImageView) findViewById(R.id.circleIcon);
-        ImageLoader.getInstance().displayImage("https://coding.net/static/fruit_avatar/Fruit-1.png", circleIcon);
+
+        dreaming.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(UserInfoActivity.this,DreamingActivity.class));
+            }
+        });
+        dreamed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(UserInfoActivity.this,DreamedActivity.class));
+            }
+        });
     }
 }

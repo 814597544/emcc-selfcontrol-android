@@ -14,7 +14,7 @@
             style="@style/line2" />
 
         <RelativeLayout
-            android:id="@+id/my_cart"
+            android:id="@+id/dreaming"
             android:layout_width="fill_parent"
             android:layout_height="49dp"
             android:background="@drawable/listitem_selector"
@@ -66,7 +66,7 @@
         android:orientation="vertical" >
 
         <RelativeLayout
-            android:id="@+id/my_deposit"
+            android:id="@+id/dreamed"
             android:layout_width="fill_parent"
             android:layout_height="49dp"
             android:background="@drawable/listitem_selector"

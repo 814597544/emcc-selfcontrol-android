@@ -1,0 +1,188 @@
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <include layout="@layout/home_head"/>
+
+    <!--<ScrollView
+        android:layout_width="match_parent"
+        android:background="#f8ffffff"
+        android:layout_height="match_parent"
+        android:fillViewport="false"
+        >-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginBottom="10dp">
+
+        <RelativeLayout
+            android:id="@+id/userInfo"
+            android:layout_width="match_parent"
+            android:layout_height="130dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/navigation_my_bg" />
+
+            <View
+                android:layout_centerVertical="true"
+                android:layout_width="53dp"
+                android:layout_height="53dp"
+                android:src="@drawable/navigation_user_sharow"
+                android:layout_marginLeft="30dp"
+                android:visibility="gone" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/circleIcon"
+                android:layout_centerVertical="true"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="16dp"
+                android:src="@drawable/coding_emoji_04"
+                android:layout_marginLeft="16dp" />
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/circleIcon"
+                android:text="李宁"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:id="@+id/sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/name"
+                android:layout_marginTop="6dp"
+                android:layout_toRightOf="@id/circleIcon"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="一切皆有可能一切皆有可能一"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                />
+
+        </RelativeLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#ffffff"
+            android:orientation="vertical">
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginTop="25dp"
+                    android:orientation="horizontal"
+                    android:background="#E8E8E8"
+                    >
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_horizontal|bottom"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:background="@drawable/cartoon_run"/>
+
+
+
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_horizontal|bottom"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:background="@drawable/cartoon_run"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_horizontal|bottom"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:background="@drawable/cartoon_run"/>
+
+                    </LinearLayout>
+
+
+
+
+
+                </LinearLayout>
+
+
+                <Button
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginLeft="20dp"
+
+                    android:gravity="center"
+                    android:text="过四级"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp"
+                    android:background="@drawable/button_bg2"/>
+
+
+
+
+
+
+
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="#E8E8E8"
+                android:layout_weight="1"
+                >
+
+
+
+
+
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <!-- </ScrollView>-->
+</LinearLayout>

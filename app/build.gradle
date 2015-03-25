@@ -34,4 +34,5 @@ dependencies {
     compile project(':calendarLibrary')
     compile project(':tabLibrary')
     compile project(':caldroid')
+    compile project(':chartLibrary')
 }

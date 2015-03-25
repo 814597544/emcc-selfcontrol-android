@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/caldroid/caldroid.iml" filepath="$PROJECT_DIR$/caldroid/caldroid.iml" />
       <module fileurl="file://$PROJECT_DIR$/calendarLibrary/calendarLibrary.iml" filepath="$PROJECT_DIR$/calendarLibrary/calendarLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/chartLibrary/chartLibrary.iml" filepath="$PROJECT_DIR$/chartLibrary/chartLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/circular/circular.iml" filepath="$PROJECT_DIR$/circular/circular.iml" />
       <module fileurl="file://$PROJECT_DIR$/emcc-selfcontrol-android.iml" filepath="$PROJECT_DIR$/emcc-selfcontrol-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />

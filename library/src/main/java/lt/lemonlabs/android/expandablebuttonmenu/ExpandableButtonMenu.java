@@ -357,10 +357,10 @@ public class ExpandableButtonMenu extends RelativeLayout implements View.OnClick
                 mLeftBtn.setBackgroundResource(a.getResourceId(R.styleable.ExpandableMenuOverlay_leftButtonSrc, 0));
                 mRightBtn.setBackgroundResource(a.getResourceId(R.styleable.ExpandableMenuOverlay_rightButtonSrc, 0));*/
               /*  mMidBtn.setBackgroundResource(a.getResourceId(R.styleable.ExpandableMenuOverlay_midButtonSrc, 0));*/
-                mRightBtn.setBackgroundResource(R.drawable.a1);
-                mCloseBtn.setBackgroundResource(R.drawable.a2);
-                mLeftBtn.setBackgroundResource(R.drawable.a3);
-                mMidBtn.setBackgroundResource(R.drawable.a2);
+                mRightBtn.setBackgroundResource(R.drawable.show_time);
+                mCloseBtn.setBackgroundResource(R.drawable.close);
+                mLeftBtn.setBackgroundResource(R.drawable.add_deram);
+                mMidBtn.setBackgroundResource(R.drawable.modify_time);
                 // button text
                 mLeftText.setText(a.getResourceId(R.styleable.ExpandableMenuOverlay_leftButtonText, R.string.empty));
                 mRightText.setText(a.getResourceId(R.styleable.ExpandableMenuOverlay_rightButtonText, R.string.empty));

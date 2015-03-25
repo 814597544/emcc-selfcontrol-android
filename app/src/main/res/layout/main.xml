@@ -8,12 +8,14 @@
     <TabHost
         android:id="@android:id/tabhost"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="fill_parent"
+        >
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            >
 
             <FrameLayout
                 android:id="@android:id/tabcontent"
@@ -25,6 +27,7 @@
                 android:id="@android:id/tabs"
                 android:layout_width="fill_parent"
                 android:layout_height="65dp"
+                android:visibility="gone"
               />
         </LinearLayout>
     </TabHost>
@@ -38,11 +41,11 @@
 
     <lt.lemonlabs.android.expandablebuttonmenu.ExpandableMenuOverlay
         android:id="@+id/button_menu"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
 
 
-        android:src="@drawable/b"
+        android:src="@drawable/open"
         ebm:dimAmount="0.8"
         ebm:mainButtonSize="0.14"
         ebm:otherButtonSize="0.14"

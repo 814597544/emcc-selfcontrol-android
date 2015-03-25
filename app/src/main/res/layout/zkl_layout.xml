@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/very_light_grey">
-    <include layout="@layout/home_head"/>
+    <include layout="@layout/home_head2"/>
     <com.github.OrangeGangsters.circularbarpager.library.CircularBarPager
         android:id="@+id/circularBarPager"
         android:layout_height="240dp"

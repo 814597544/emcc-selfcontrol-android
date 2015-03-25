@@ -86,7 +86,7 @@ private void initPopupWindows(View v){
 
 }
 private void startActivity1(){
-    Intent intent=new Intent(HomeActivity.this,EditTimeActivity.class);
+    Intent intent=new Intent(HomeActivity.this,AddDreamActivity.class);
     startActivity(intent);
 
 }
@@ -96,7 +96,7 @@ private void startActivity1(){
 
     }
     private void startActivity3(){
-        Intent intent=new Intent(HomeActivity.this,LoginActivity.class);
+        Intent intent=new Intent(HomeActivity.this,EditTimeActivity.class);
         startActivity(intent);
 
     }

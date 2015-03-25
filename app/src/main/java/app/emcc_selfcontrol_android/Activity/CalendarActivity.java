@@ -9,14 +9,15 @@ import app.emcc_selfcontrol_android.R;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 
+import org.mitre.ascv.AndroidSegmentedControlView;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 public class CalendarActivity extends FragmentActivity {
     private CaldroidFragment caldroidFragment;
-    private CaldroidFragment dialogCaldroidFragment;
-
+/*    private CaldroidFragment dialogCaldroidFragment;*/
     private void setCustomResourceForDates() {
         Calendar cal = Calendar.getInstance();
 
@@ -43,7 +44,6 @@ public class CalendarActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendar_layout);
-
         final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
 
         // Setup caldroid fragment
@@ -107,6 +107,8 @@ public class CalendarActivity extends FragmentActivity {
         caldroidFragment.setCaldroidListener(listener);
 
 
+
+
     }
 
     /**
@@ -121,10 +123,10 @@ public class CalendarActivity extends FragmentActivity {
             caldroidFragment.saveStatesToKey(outState, "CALDROID_SAVED_STATE");
         }
 
-        if (dialogCaldroidFragment != null) {
+       /* if (dialogCaldroidFragment != null) {
             dialogCaldroidFragment.saveStatesToKey(outState,
                     "DIALOG_CALDROID_SAVED_STATE");
-        }
+        }*/
     }
 
 }
