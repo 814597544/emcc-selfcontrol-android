@@ -14,13 +14,28 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="center_vertical"
             >
 
+            <LinearLayout
+                android:id="@+id/title_return"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_alignParentLeft="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_marginLeft="15dip" >
 
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/cart_return" />
+
+
+            </LinearLayout>
             <org.mitre.ascv.AndroidSegmentedControlView
                 android:id="@+id/tabs"
                 android:layout_width="wrap_content"
@@ -31,10 +46,25 @@
                 ascv:ascv_selectedColor="@color/test_attr_selected_color"
                 ascv:ascv_unselectedColor="@color/test_attr_unselected_color"
                 ascv:ascv_items="@array/three_state_option"
+                android:layout_centerInParent="true"
                  />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                android:layout_marginRight="15dp"
+                 >
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/share" />
 
 
-        </LinearLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
 
 
 
