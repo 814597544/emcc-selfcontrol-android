@@ -5,6 +5,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
+
 import app.emcc_selfcontrol_android.R;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
@@ -18,7 +20,7 @@ import java.util.Date;
 public class CalendarActivity extends FragmentActivity {
     private CaldroidFragment caldroidFragment;
     private AndroidSegmentedControlView tabs;
-/*    private CaldroidFragment dialogCaldroidFragment;*/
+    private ViewSwitcher mviewSwitcher;
     private void setCustomResourceForDates() {
         Calendar cal = Calendar.getInstance();
 
@@ -40,22 +42,23 @@ public class CalendarActivity extends FragmentActivity {
             caldroidFragment.setTextColorForDate(R.color.white, greenDate);
         }
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendar_layout);
         final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
         tabs=(AndroidSegmentedControlView)findViewById(R.id.tabs);
-        // Setup caldroid fragment
-        // **** If you want normal CaldroidFragment, use below line ****
+        mviewSwitcher=(ViewSwitcher)findViewById(R.id.mviewSwitch);
         caldroidFragment = new CaldroidFragment();
-
         tabs.setOnSelectionChangedListener(new AndroidSegmentedControlView.OnSelectionChangedListener() {
             @Override
             public void newSelection(String identifier, String value) {
 
-
+                if ("日 历".equals(value)){
+                    mviewSwitcher.setDisplayedChild(0);
+                }else{
+                    mviewSwitcher.setDisplayedChild(1);
+                }
 
 
             }
@@ -84,6 +87,7 @@ public class CalendarActivity extends FragmentActivity {
             public void onSelectDate(Date date, View view) {
                 Toast.makeText(getApplicationContext(), formatter.format(date),
                         Toast.LENGTH_SHORT).show();
+
 
             }
 
@@ -114,10 +118,6 @@ public class CalendarActivity extends FragmentActivity {
 
         // Setup Caldroid
         caldroidFragment.setCaldroidListener(listener);
-
-
-
-
     }
 
     /**
@@ -131,11 +131,5 @@ public class CalendarActivity extends FragmentActivity {
         if (caldroidFragment != null) {
             caldroidFragment.saveStatesToKey(outState, "CALDROID_SAVED_STATE");
         }
-
-       /* if (dialogCaldroidFragment != null) {
-            dialogCaldroidFragment.saveStatesToKey(outState,
-                    "DIALOG_CALDROID_SAVED_STATE");
-        }*/
     }
-
 }

@@ -21,6 +21,7 @@ public class UserInfoActivity extends Activity{
     RelativeLayout dreaming;
     RelativeLayout dreamed;
     RelativeLayout setting;
+    private CircleImageView circleIcon;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_info);
@@ -29,7 +30,8 @@ public class UserInfoActivity extends Activity{
         setting=(RelativeLayout)findViewById(R.id.setting);
         titleName=(TextView) findViewById(R.id.title);
         titleName.setText("个人中心");
-
+        circleIcon=(CircleImageView) findViewById(R.id.circleIcon);
+        ImageLoader.getInstance().displayImage("https://coding.net/static/fruit_avatar/Fruit-1.png", circleIcon);
         dreaming.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

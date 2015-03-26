@@ -25,6 +25,7 @@ import com.db.chart.view.YController;
 import com.db.chart.view.animation.Animation;
 import com.db.chart.view.animation.easing.BaseEasingMethod;
 import com.db.chart.view.animation.easing.quint.QuintEaseOut;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ import java.util.List;
 import app.emcc_selfcontrol_android.R;
 import app.emcc_selfcontrol_android.UI.MagnificentChart;
 import app.emcc_selfcontrol_android.UI.MagnificentChartItem;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by lenovo on 2015/3/23.
@@ -40,7 +42,7 @@ public class DreamingActivity  extends Activity{
     MagnificentChart magnificentChart;
     private final TimeInterpolator enterInterpolator = new DecelerateInterpolator(1.5f);
     private final TimeInterpolator exitInterpolator = new AccelerateInterpolator();
-
+    private CircleImageView circleIcon;
     private final static int[] beginOrder = {0, 1, 2, 3, 4, 5, 6};
     private final static int[] middleOrder = {3, 2, 4, 1, 5, 0, 6};
     private final static int[] endOrder = {6, 5, 4, 3, 2, 1, 0};
@@ -114,6 +116,10 @@ public class DreamingActivity  extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dreaming);
+        circleIcon=(CircleImageView) findViewById(R.id.circleIcon);
+        ImageLoader.getInstance().displayImage("https://coding.net/static/fruit_avatar/Fruit-1.png", circleIcon);
+
+
         mCurrOverlapFactor = 1;
         mCurrEasing = new QuintEaseOut();
         mCurrStartX = -1;

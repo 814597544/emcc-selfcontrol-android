@@ -27,7 +27,7 @@
                 android:layout_height="25.0dip"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/my_promise_icon"
+                android:background="@drawable/dreaming"
                 android:contentDescription="#ff000000"
                 android:padding="5.0dip" />
 
@@ -79,7 +79,7 @@
                 android:layout_height="25.0dip"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/my_promise_icon"
+                android:background="@drawable/dreamed"
                 android:contentDescription="#ff000000"
                 android:padding="5.0dip" />
 
@@ -131,7 +131,7 @@
                 android:layout_height="25.0dip"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/my_promise_icon"
+                android:background="@drawable/setting"
                 android:contentDescription="#ff000000"
                 android:padding="5.0dip" />
 

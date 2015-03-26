@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,37 +24,57 @@ import com.viewpagerindicator.CirclePageIndicator;
  * @author Adil Soomro
  *
  */
-public class ZKLActivity extends Activity {
-    private RoundCornerProgressBar progressTwo;
+public class ZKLActivity extends Activity implements View.OnClickListener{
 
+
+    private RoundCornerProgressBar progressTwo;
     private CircleImageView circleIcon;
-    private int progress2 = 5;
     private CircularBarPager mCircularBarPager;
-    TextView titleName;
+    private TextView titleName;
+    private ImageView addDream;
+
     /**
      * The animation time in milliseconds that we take to display the steps taken
      */
     private static final int BAR_ANIMATION_TIME = 1000;
-
+    private int progress2 = 5;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.zkl_layout);
+
         titleName=(TextView) findViewById(R.id.title);
         titleName.setText("自控力");
         circleIcon=(CircleImageView) findViewById(R.id.circleIcon);
+        circleIcon.setOnClickListener(this);
+        addDream=(ImageView) findViewById(R.id.add);
+        addDream.setOnClickListener(this);
         ImageLoader.getInstance().displayImage("https://coding.net/static/fruit_avatar/Fruit-1.png", circleIcon);
         progressTwo = (RoundCornerProgressBar) findViewById(R.id.progress_two);
         progressTwo.setBackgroundColor(getResources().getColor(R.color.custom_progress_background));
-        circleIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ZKLActivity.this,LoginActivity.class));
-            }
-        });
+
         updateProgressTwo();
         initViews();
     }
+
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.add :
+                startActivity(new Intent(ZKLActivity.this,AddDreamActivity.class));
+                break;
+            case R.id.circleIcon :
+                startActivity(new Intent(ZKLActivity.this,LoginActivity.class));
+                break;
+            default:
+
+                break;
+
+        }
+    }
+
     private void updateProgressTwo() {
         progressTwo.setProgress(progress2);
         updateProgressTwoColor();
