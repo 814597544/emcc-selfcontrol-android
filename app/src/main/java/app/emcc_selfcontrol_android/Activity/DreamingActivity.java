@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -43,6 +44,7 @@ public class DreamingActivity  extends Activity{
     private final TimeInterpolator enterInterpolator = new DecelerateInterpolator(1.5f);
     private final TimeInterpolator exitInterpolator = new AccelerateInterpolator();
     private CircleImageView circleIcon;
+    private LinearLayout title_return;
     private final static int[] beginOrder = {0, 1, 2, 3, 4, 5, 6};
     private final static int[] middleOrder = {3, 2, 4, 1, 5, 0, 6};
     private final static int[] endOrder = {6, 5, 4, 3, 2, 1, 0};
@@ -118,8 +120,13 @@ public class DreamingActivity  extends Activity{
         setContentView(R.layout.dreaming);
         circleIcon=(CircleImageView) findViewById(R.id.circleIcon);
         ImageLoader.getInstance().displayImage("https://coding.net/static/fruit_avatar/Fruit-1.png", circleIcon);
-
-
+        title_return=(LinearLayout) findViewById(R.id.title_return);
+        title_return.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         mCurrOverlapFactor = 1;
         mCurrEasing = new QuintEaseOut();
         mCurrStartX = -1;

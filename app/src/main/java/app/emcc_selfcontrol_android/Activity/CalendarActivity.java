@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
@@ -17,10 +18,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class CalendarActivity extends FragmentActivity {
+public class CalendarActivity extends FragmentActivity implements View.OnClickListener{
     private CaldroidFragment caldroidFragment;
     private AndroidSegmentedControlView tabs;
     private ViewSwitcher mviewSwitcher;
+    private LinearLayout title_return;
     private void setCustomResourceForDates() {
         Calendar cal = Calendar.getInstance();
 
@@ -47,6 +49,8 @@ public class CalendarActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendar_layout);
         final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
+        title_return=(LinearLayout) findViewById(R.id.title_return);
+        title_return.setOnClickListener(this);
         tabs=(AndroidSegmentedControlView)findViewById(R.id.tabs);
         mviewSwitcher=(ViewSwitcher)findViewById(R.id.mviewSwitch);
         caldroidFragment = new CaldroidFragment();
@@ -118,6 +122,20 @@ public class CalendarActivity extends FragmentActivity {
 
         // Setup Caldroid
         caldroidFragment.setCaldroidListener(listener);
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.title_return :
+                finish();
+                break;
+            default:
+
+                break;
+
+        }
     }
 
     /**

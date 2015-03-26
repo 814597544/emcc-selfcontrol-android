@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ public class UserInfoActivity extends Activity{
     RelativeLayout dreaming;
     RelativeLayout dreamed;
     RelativeLayout setting;
+    private LinearLayout title_return;
     private CircleImageView circleIcon;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +31,7 @@ public class UserInfoActivity extends Activity{
         dreamed=(RelativeLayout)findViewById(R.id.dreamed);
         setting=(RelativeLayout)findViewById(R.id.setting);
         titleName=(TextView) findViewById(R.id.title);
+        title_return=(LinearLayout) findViewById(R.id.title_return);
         titleName.setText("个人中心");
         circleIcon=(CircleImageView) findViewById(R.id.circleIcon);
         ImageLoader.getInstance().displayImage("https://coding.net/static/fruit_avatar/Fruit-1.png", circleIcon);
@@ -48,6 +51,12 @@ public class UserInfoActivity extends Activity{
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(UserInfoActivity.this,SettingActivity.class));
+            }
+        });
+        title_return.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              finish();
             }
         });
     }
