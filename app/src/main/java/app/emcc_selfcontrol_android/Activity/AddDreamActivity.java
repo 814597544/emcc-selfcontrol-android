@@ -85,7 +85,7 @@ public class AddDreamActivity extends BaseActivity implements View.OnClickListen
                     show(END_RILI);
                 }else
                 {
-                    Toast.makeText(getApplicationContext(),"先编辑开始时间",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"先编辑所需时间",Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.cancel :
@@ -107,17 +107,38 @@ public class AddDreamActivity extends BaseActivity implements View.OnClickListen
         dialog.setOnDateTimeSetListener(new DateTimePickerDialog.OnDateTimeSetListener()
         {
             public void OnDateTimeSet(AlertDialog dialog, long date)
-            {
+            {   try {
                 if (flag==START_RILI){
-                    start_rili_value.setText(getStringDate(date));
-                    startData=getStringDate(date);
+
+                            if (isBefore(getStringDate(System.currentTimeMillis()),getStringDate(date))) {
+                                start_rili_value.setText(getStringDate(date));
+                                startData = getStringDate(date);
+                            }else {
+                                Toast.makeText(getApplicationContext(),"请选择未来时间",Toast.LENGTH_SHORT).show();
+                            }
+
                 }else if (flag==END_RILI){
-                    end_rili_value.setText(getStringDate(date));
+
                     endData=getStringDate(date);
-                    calculate(startData,endData);
+                    int j=Integer.parseInt(need_time.getText().toString())/24;
+                    int i=Integer.parseInt(need_time.getText().toString())%24==0?j:j+1;
+                    if(daysBetween(startData, endData)>=i){
+                        end_rili_value.setText(getStringDate(date));
+                        calculate(startData,endData);
+                    }else {
+
+                        Toast.makeText(getApplicationContext(),"时间范围不低于"+i+"天",Toast.LENGTH_SHORT).show();
+                    }
+
+
+
                 }
+            }catch (Exception e){
 
             }
+
+            }
+
         });
         dialog.show();
     }
@@ -132,6 +153,32 @@ public class AddDreamActivity extends BaseActivity implements View.OnClickListen
 
         return dateString;
     }
+
+
+
+    private boolean isBefore(String curTime,String selectTime) throws ParseException{
+
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+
+        Date bt=sdf.parse(curTime);
+
+        Date et=sdf.parse(selectTime);
+
+        if (bt.before(et)||bt.equals(et)){
+
+        return true;
+
+        }else{
+
+            return false;
+
+        }
+
+
+
+    }
+
+
     /**
      *字符串的日期格式的计算
      */
