@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import app.emcc_selfcontrol_android.Adapter.CircularPagerAdapter;
 import app.emcc_selfcontrol_android.R;
+import app.emcc_selfcontrol_android.Utils.DoubleClickExitHelper;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
@@ -24,7 +26,7 @@ import com.viewpagerindicator.CirclePageIndicator;
  * @author Adil Soomro
  *
  */
-public class ZKLActivity extends Activity implements View.OnClickListener{
+public class ZKLActivity extends BaseActivity implements View.OnClickListener{
 
 
     private RoundCornerProgressBar progressTwo;
@@ -32,7 +34,7 @@ public class ZKLActivity extends Activity implements View.OnClickListener{
     private CircularBarPager mCircularBarPager;
     private TextView titleName;
     private ImageView addDream;
-
+    private DoubleClickExitHelper mDoubleClickExitHelper;
     /**
      * The animation time in milliseconds that we take to display the steps taken
      */
@@ -49,6 +51,7 @@ public class ZKLActivity extends Activity implements View.OnClickListener{
         circleIcon.setOnClickListener(this);
         addDream=(ImageView) findViewById(R.id.add);
         addDream.setOnClickListener(this);
+        mDoubleClickExitHelper = new DoubleClickExitHelper(this);
         ImageLoader.getInstance().displayImage("https://coding.net/static/fruit_avatar/Fruit-1.png", circleIcon);
         progressTwo = (RoundCornerProgressBar) findViewById(R.id.progress_two);
         progressTwo.setBackgroundColor(getResources().getColor(R.color.custom_progress_background));
@@ -154,5 +157,20 @@ public class ZKLActivity extends Activity implements View.OnClickListener{
                 }
             }
         });
+    }
+
+    /**
+     * 监听返回--是否退出程序
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        boolean flag = true;
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            // 是否退出应用
+            return mDoubleClickExitHelper.onKeyDown(keyCode, event);
+        } else {
+            flag = super.onKeyDown(keyCode, event);
+        }
+        return flag;
     }
 }

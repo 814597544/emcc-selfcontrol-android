@@ -39,7 +39,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by lenovo on 2015/3/23.
  */
-public class DreamingActivity  extends Activity{
+public class DreamingActivity  extends BaseActivity{
     MagnificentChart magnificentChart;
     private final TimeInterpolator enterInterpolator = new DecelerateInterpolator(1.5f);
     private final TimeInterpolator exitInterpolator = new AccelerateInterpolator();
@@ -298,13 +298,6 @@ public class DreamingActivity  extends Activity{
                     .setOverlap(mOldOverlapFactor, mOldOverlapOrder)
                     .setStartPoint(mOldStartX, mOldStartY);
     }
-
-
-
-
-
-
-
 
 
 

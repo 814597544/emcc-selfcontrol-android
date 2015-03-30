@@ -12,7 +12,7 @@ import app.emcc_selfcontrol_android.R;
 /**
  * Created by lenovo on 2015/3/4.
  */
-public class LoginActivity extends Activity implements View.OnClickListener{
+public class LoginActivity extends BaseActivity implements View.OnClickListener{
     private Button bt_sns_login;
     private Button bt_sns_register;
     private LinearLayout title_return;

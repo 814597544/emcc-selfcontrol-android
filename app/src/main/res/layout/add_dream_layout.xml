@@ -9,29 +9,31 @@
 <RelativeLayout
     android:layout_width="fill_parent"
     android:layout_height="40dp"
-    android:layout_margin="12dp"
+    android:layout_margin="10dp"
     android:background="#ffffff">
 
 
     <RelativeLayout
         android:id="@+id/deram_name_view"
-        android:layout_width="120dp"
+        android:layout_width="110dp"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
-        android:paddingLeft="15dp"
+        android:paddingLeft="5dp"
         android:background="@drawable/xj">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="梦想名称"
-        android:textSize="15sp"
+        android:textSize="13sp"
         android:textColor="#ABABAB"
         />
     </RelativeLayout>
     <EditText
+        android:id="@+id/deram_name"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@null"
+        android:textSize="13sp"
         android:layout_toRightOf="@+id/deram_name_view" />
 
     </RelativeLayout>
@@ -40,142 +42,237 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="40dp"
-        android:layout_margin="12dp"
+        android:layout_margin="10dp"
         android:background="#ffffff">
 
         <RelativeLayout
             android:id="@+id/need_time_view"
-            android:layout_width="135dp"
+            android:layout_width="110dp"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:paddingLeft="15dp"
+            android:paddingLeft="5dp"
             android:background="@drawable/xj">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="预计所需时间"
-                android:textSize="15sp"
-
+                android:textSize="13sp"
                 android:textColor="#ABABAB"
                 />
         </RelativeLayout>
         <EditText
+            android:id="@+id/need_time"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:background="@null"
+            android:textSize="13sp"
+            android:numeric="integer"
+            android:inputType="number"
             android:layout_toRightOf="@+id/need_time_view" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="小时"
+            android:textSize="13sp"
+            android:textColor="#ABABAB"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            />
     </RelativeLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
 
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="#ffffff" >
+
+            <RelativeLayout
+                android:id="@+id/end_time_view"
+                android:layout_width="110dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"
+                android:background="@drawable/xj">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="实现时间"
+                    android:textSize="13sp"
+                    android:textColor="#ABABAB"
+                    />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/start_rili"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/rili"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/end_time_view"  />
+
+            <TextView
+                android:id="@+id/start_rili_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:textColor="#ABABAB"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/start_rili"
+                android:layout_marginLeft="5dp"
+                />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:layout_weight="2.5">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="至"
+                android:textSize="13sp"
+                android:textColor="#ABABAB"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#ffffff"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_weight="2">
+
+
+            <ImageView
+                android:id="@+id/end_rili"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/rili"
+                />
+            <TextView
+                android:id="@+id/end_rili_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:textColor="#ABABAB"
+                android:layout_marginLeft="5dp"
+                />
+
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="40dp"
-        android:layout_margin="12dp"
+        android:layout_margin="10dp"
         android:background="#ffffff">
 
 
         <RelativeLayout
             android:id="@+id/goal_view"
-            android:layout_width="140dp"
+            android:layout_width="110dp"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:paddingLeft="15dp"
+            android:paddingLeft="5dp"
             android:background="@drawable/xj">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="每天完成目标"
-                android:textSize="15sp"
+                android:textSize="13sp"
+                android:textColor="#ABABAB"
+                />
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/mgoal_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:textColor="#ABABAB"
+            android:layout_centerInParent="true"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="小时"
+            android:textSize="13sp"
+            android:textColor="#ABABAB"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:background="#ffffff">
+
+
+        <RelativeLayout
+            android:id="@+id/rest_view"
+            android:layout_width="110dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:background="@drawable/xj">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="每天休息时间"
+                android:textSize="13sp"
                 android:textColor="#ABABAB"
                 />
         </RelativeLayout>
         <EditText
+            android:id="@+id/mest_view"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:background="@null"
-            android:layout_toRightOf="@+id/goal_view" />
+            android:textSize="13sp"
+            android:numeric="integer"
+            android:inputType="number"
+            android:layout_toRightOf="@+id/rest_view" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="小时"
+            android:textSize="13sp"
+            android:textColor="#ABABAB"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            />
+
     </RelativeLayout>
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="40dp"
-            android:layout_margin="12dp"
-            android:orientation="horizontal">
-
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:background="#ffffff" >
-
-                <RelativeLayout
-                    android:id="@+id/end_time_view"
-                    android:layout_width="125dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="12dp"
-                    android:background="@drawable/xj">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="预计实现时间"
-                        android:textSize="15sp"
-                        android:textColor="#ABABAB"
-                        />
-                </RelativeLayout>
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/rili"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/end_time_view"  />
 
 
 
-            </RelativeLayout>
 
-<LinearLayout
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:gravity="center"
-    android:layout_weight="2.5">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="至"
-        android:textSize="15sp"
-        android:textColor="#ABABAB"
-        />
-
-    </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:background="#ffffff"
-                android:gravity="center_vertical"
-                android:layout_weight="2">
-
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/rili"
-                />
-
-
-            </LinearLayout>
-
-
-
-            </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="45dp"
-            android:layout_margin="12dp"
+            android:layout_margin="10dp"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             >
@@ -187,6 +284,7 @@
                 android:gravity="center"
                 >
                 <Button
+                    android:id="@+id/cancel"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:text="取消"
@@ -204,6 +302,7 @@
                 android:gravity="center"
                 >
                 <Button
+                    android:id="@+id/ok"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:background="@drawable/button_bg2"

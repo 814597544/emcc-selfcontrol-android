@@ -9,7 +9,7 @@ import app.emcc_selfcontrol_android.R;
 /**
  * Created by lenovo on 2015/3/2.
  */
-public class EditTimeActivity extends Activity{
+public class EditTimeActivity extends BaseActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

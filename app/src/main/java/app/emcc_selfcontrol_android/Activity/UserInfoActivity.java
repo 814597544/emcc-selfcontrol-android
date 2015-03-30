@@ -17,7 +17,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by lenovo on 2015/3/20.
  */
-public class UserInfoActivity extends Activity{
+public class UserInfoActivity extends BaseActivity{
     TextView titleName;
     RelativeLayout dreaming;
     RelativeLayout dreamed;

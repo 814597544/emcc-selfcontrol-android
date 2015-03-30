@@ -10,7 +10,7 @@ import app.emcc_selfcontrol_android.R;
 /**
  * Created by lenovo on 2015/3/23.
  */
-public class RegisterActivity extends Activity implements
+public class RegisterActivity extends BaseActivity implements
         View.OnClickListener{
     private LinearLayout title_return;
     @Override

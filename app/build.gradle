@@ -29,10 +29,11 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:1.2.0'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
     compile project(':library')
-    compile project( ':circular')
+    compile project(':circular')
     compile project(':progressLibrary')
     compile project(':calendarLibrary')
     compile project(':tabLibrary')
     compile project(':caldroid')
     compile project(':chartLibrary')
+    compile files('libs/commons-httpclient-3.1.jar')
 }

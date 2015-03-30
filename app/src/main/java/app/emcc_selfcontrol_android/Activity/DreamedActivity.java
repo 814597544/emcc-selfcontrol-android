@@ -13,7 +13,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by lenovo on 2015/3/24.
  */
-public class DreamedActivity extends Activity implements View.OnClickListener{
+public class DreamedActivity extends BaseActivity implements View.OnClickListener{
     private CircleImageView circleIcon;
     private LinearLayout title_return;
     @Override

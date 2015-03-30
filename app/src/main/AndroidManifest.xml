@@ -38,9 +38,11 @@
         <activity android:name="app.emcc_selfcontrol_android.Activity.UserInfoActivity"
             android:screenOrientation="portrait" />
         <activity android:name="app.emcc_selfcontrol_android.Activity.AddDreamActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"  />
         <activity android:name="app.emcc_selfcontrol_android.Activity.LoginActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"  />
         <activity android:name="app.emcc_selfcontrol_android.Activity.RegisterActivity"
             android:screenOrientation="portrait" />
         <activity android:name="app.emcc_selfcontrol_android.Activity.DreamingActivity"

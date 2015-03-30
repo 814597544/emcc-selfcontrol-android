@@ -4,6 +4,7 @@ import android.app.TabActivity;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager.LayoutParams;
@@ -11,7 +12,10 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TabHost;
 import android.widget.TextView;
+
+import app.emcc_selfcontrol_android.Application.AppManager;
 import app.emcc_selfcontrol_android.R;
+import app.emcc_selfcontrol_android.Utils.DoubleClickExitHelper;
 import de.hdodenhof.circleimageview.CircleImageView;
 import lt.lemonlabs.android.expandablebuttonmenu.ExpandableButtonMenu;
 import lt.lemonlabs.android.expandablebuttonmenu.ExpandableMenuOverlay;
@@ -32,6 +36,8 @@ public class HomeActivity extends TabActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+        AppManager.getAppManager().addActivity(this);
+
         menuOverlay = (ExpandableMenuOverlay) findViewById(R.id.button_menu);
 
 		tabHost = getTabHost();
@@ -100,4 +106,5 @@ private void startActivity1(){
         startActivity(intent);
 
     }
+
 }

@@ -38,14 +38,12 @@ public class CircularInnerViewActivity extends LinearLayout {
 
     public CircularInnerViewActivity(Context context) {
         super(context);
-
         initView();
     }
 
     private void initView() {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final LinearLayout mainV = (LinearLayout) inflater.inflate(R.layout.view_user_info, this);
-
         //TODO init view
     }
 
