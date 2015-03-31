@@ -14,8 +14,8 @@
     android:layout_height="wrap_content">
     <com.github.OrangeGangsters.circularbarpager.library.CircularBarPager
         android:id="@+id/circularBarPager"
-        android:layout_height="240dp"
-        android:layout_width="240dp"
+        android:layout_height="230dp"
+        android:layout_width="230dp"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
         android:layout_marginTop="35dp"
@@ -25,14 +25,36 @@
 
     <ImageView
         android:id="@+id/add"
-        android:layout_height="240dp"
-        android:layout_width="240dp"
+        android:layout_height="230dp"
+        android:layout_width="230dp"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
         android:layout_marginTop="35dp"
         android:layout_centerHorizontal="true"
         android:src="@drawable/add"
        />
+    <ImageView
+        android:id="@+id/start_dream"
+        android:layout_height="230dp"
+        android:layout_width="230dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:layout_marginTop="35dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/start"
+        android:visibility="gone"
+        />
+    <ImageView
+        android:id="@+id/stop_dream"
+        android:layout_height="230dp"
+        android:layout_width="230dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:layout_marginTop="35dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/stop"
+        android:visibility="gone"
+        />
 </RelativeLayout>
 
     <LinearLayout

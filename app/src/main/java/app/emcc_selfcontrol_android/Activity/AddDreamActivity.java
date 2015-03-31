@@ -2,6 +2,7 @@ package app.emcc_selfcontrol_android.Activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,6 +15,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -197,7 +199,9 @@ public class AddDreamActivity extends BaseActivity implements View.OnClickListen
     private void calculate(String smdate,String bdate){
         try {
             int i=daysBetween(startData, endData);
-            mgoal_view.setText(Double.parseDouble(need_time.getText().toString())/i+"");
+            double d=Double.parseDouble(need_time.getText().toString())/i;
+            mgoal_view.setText(format(d)+"");
+            mest_view.setText(24-format(d)+"");
         }catch (ParseException e){
 
         }
@@ -218,7 +222,10 @@ public class AddDreamActivity extends BaseActivity implements View.OnClickListen
         SharePrefrerncesUtil.put(this,"end_rili_Time",end_rili_value.getText().toString());
         SharePrefrerncesUtil.put(this,"start_rili_Time",start_rili_value.getText().toString());
 
-
+        Intent intent = new Intent();
+        intent.setAction("zkl.add.dream");
+        sendBroadcast(intent);
+        finish();
     }
 
    private void calculate(int count){
@@ -253,6 +260,7 @@ public class AddDreamActivity extends BaseActivity implements View.OnClickListen
 
            }
 
+
            @Override
            public void afterTextChanged(Editable s) {
 
@@ -261,5 +269,9 @@ public class AddDreamActivity extends BaseActivity implements View.OnClickListen
 
 
    }
-
+    public double format(double f){
+        BigDecimal b   =   new   BigDecimal(f);
+        double   f1   =   b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
+        return f1;
+    }
 }

@@ -1,7 +1,10 @@
 package app.emcc_selfcontrol_android.Activity;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -12,8 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import app.emcc_selfcontrol_android.Adapter.CircularPagerAdapter;
+import app.emcc_selfcontrol_android.DataBase.DBAdapter;
 import app.emcc_selfcontrol_android.R;
 import app.emcc_selfcontrol_android.Utils.DoubleClickExitHelper;
+import app.emcc_selfcontrol_android.Utils.SharePrefrerncesUtil;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
@@ -28,13 +33,14 @@ import com.viewpagerindicator.CirclePageIndicator;
  */
 public class ZKLActivity extends BaseActivity implements View.OnClickListener{
 
-
+    private MyReceiver myReceiver;
     private RoundCornerProgressBar progressTwo;
     private CircleImageView circleIcon;
     private CircularBarPager mCircularBarPager;
-    private TextView titleName;
-    private ImageView addDream;
+    private TextView titleName,dream_time,rest_time,waste_time;
+    private ImageView addDream,start_dream,stop_dream;
     private DoubleClickExitHelper mDoubleClickExitHelper;
+    private DBAdapter db;
     /**
      * The animation time in milliseconds that we take to display the steps taken
      */
@@ -44,21 +50,54 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.zkl_layout);
+        myReceiver = new MyReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("zkl.add.dream");
+        registerReceiver(myReceiver, filter);
 
+        dream_time=(TextView) findViewById(R.id.dream_time);
+        rest_time=(TextView) findViewById(R.id.rest_time);
+        waste_time=(TextView) findViewById(R.id.waste_time);
         titleName=(TextView) findViewById(R.id.title);
         titleName.setText("自控力");
         circleIcon=(CircleImageView) findViewById(R.id.circleIcon);
         circleIcon.setOnClickListener(this);
         addDream=(ImageView) findViewById(R.id.add);
         addDream.setOnClickListener(this);
+        start_dream=(ImageView) findViewById(R.id.start_dream);
+        start_dream.setOnClickListener(this);
+        stop_dream=(ImageView) findViewById(R.id.stop_dream);
+        stop_dream.setOnClickListener(this);
+
+
         mDoubleClickExitHelper = new DoubleClickExitHelper(this);
+
         ImageLoader.getInstance().displayImage("https://coding.net/static/fruit_avatar/Fruit-1.png", circleIcon);
         progressTwo = (RoundCornerProgressBar) findViewById(R.id.progress_two);
         progressTwo.setBackgroundColor(getResources().getColor(R.color.custom_progress_background));
 
         updateProgressTwo();
         initViews();
+        init();
+
+
     }
+
+     private void init(){
+            db=new DBAdapter(ZKLActivity.this);
+            db.open();
+         if(!"".equals(SharePrefrerncesUtil.get(ZKLActivity.this,"dream_name",""))){
+             refresh();
+         }else{
+             addDream.setVisibility(View.VISIBLE);
+         }
+
+     }
+
+
+
+
+
 
 
     @Override
@@ -70,6 +109,12 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
                 break;
             case R.id.circleIcon :
                 startActivity(new Intent(ZKLActivity.this,LoginActivity.class));
+                break;
+            case R.id.start_dream :
+                start();
+                break;
+            case R.id.stop_dream :
+                stop();
                 break;
             default:
 
@@ -157,6 +202,38 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
                 }
             }
         });
+    }
+
+    private void start(){
+        start_dream.setVisibility(View.GONE);
+        stop_dream.setVisibility(View.VISIBLE);
+    }
+
+    private void stop(){
+        start_dream.setVisibility(View.VISIBLE);
+        stop_dream.setVisibility(View.GONE);
+    }
+    private void refresh(){
+        start_dream.setVisibility(View.VISIBLE);
+        stop_dream.setVisibility(View.GONE);
+        addDream.setVisibility(View.GONE);
+        mCircularBarPager.setVisibility(View.VISIBLE);
+        dream_time.setText(SharePrefrerncesUtil.get(ZKLActivity.this,"everyday_goal","")+"小时");
+        rest_time.setText(SharePrefrerncesUtil.get(ZKLActivity.this,"everyday_rest","")+"小时");
+        waste_time.setText("0小时");
+    }
+    public class MyReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(final Context context, Intent intent) {
+
+            refresh();
+
+        }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(myReceiver);
     }
 
     /**
