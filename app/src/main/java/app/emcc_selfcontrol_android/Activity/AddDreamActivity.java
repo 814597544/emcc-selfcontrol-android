@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -152,7 +153,7 @@ public class AddDreamActivity extends BaseActivity implements View.OnClickListen
      */
     public static String getStringDate(Long date)
     {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd ");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String dateString = formatter.format(date);
 
         return dateString;
@@ -217,28 +218,62 @@ public class AddDreamActivity extends BaseActivity implements View.OnClickListen
             Toast.makeText(getApplicationContext(),"请编辑所有信息",Toast.LENGTH_SHORT).show();
             return;
         }
+        String dreamName=dream_name.getText().toString();
+        String goalTime=mgoal_view.getText().toString();
+        String restTime=mest_view.getText().toString();
         SharePrefrerncesUtil.put(this,"dream_name",dream_name.getText().toString());
         SharePrefrerncesUtil.put(this,"need_time",need_time.getText().toString());
         SharePrefrerncesUtil.put(this,"everyday_goal",mgoal_view.getText().toString());
         SharePrefrerncesUtil.put(this,"everyday_rest",mest_view.getText().toString());
         SharePrefrerncesUtil.put(this,"end_rili_Time",end_rili_value.getText().toString());
         SharePrefrerncesUtil.put(this, "start_rili_Time", start_rili_value.getText().toString());
-        db.open();
-        Cursor cursor = null;
-        cursor = db.getAllItem();
-        if (cursor.getCount() < 2) {
-            for (int i = 0; i < betweenDays; i++) {
-                db.insertItem( "1", "2", "3", "4");
-            }
-        }
-        cursor=db.getItem("1");
-        Toast.makeText(getApplicationContext(),cursor.getCount()+"",Toast.LENGTH_SHORT).show();
-        db.close();
+
+        initDataBase(dreamName,goalTime,restTime,start_rili_value.getText().toString(),end_rili_value.getText().toString());
+
         Intent intent = new Intent();
         intent.setAction("zkl.add.dream");
         sendBroadcast(intent);
         finish();
     }
+
+
+    private void initDataBase(final String dreamName,final String goalTime,final String restTime,final String startTime, final String endTime){
+
+        Log.v("start_time="+startTime,"--------------------");
+        Calendar start = Calendar.getInstance();
+        Calendar end = Calendar.getInstance();
+        int[] date = parseTime(startTime);
+        start.set(date[0], date[1], date[2]);
+        date = parseTime(endTime);
+        end.set(date[0], date[1], date[2]);
+
+        db.open();
+        Cursor cursor = null;
+        cursor = db.getAllItem();
+        Log.v("date[0]="+date[0]+"-"+date[1]+"-"+date[2],"--------------------");
+        while(start.before(end)||start.equals(end)){
+
+            db.insertItem(dreamName, start.get(Calendar.YEAR)+"-"+start.get(Calendar.MONTH)+"-"+start.get(Calendar.DATE), "", restTime, "",goalTime);
+            System.out.println(start.get(Calendar.YEAR)+"-"+start.get(Calendar.MONTH)+"-"+start.get(Calendar.DATE));
+            start.add(Calendar.DATE, 1);
+        }
+
+        cursor=db.getItem("dream_name");
+        Toast.makeText(getApplicationContext(),cursor.getCount()+"",Toast.LENGTH_SHORT).show();
+        db.close();
+
+    }
+
+    private int[] parseTime(final String timeString){
+        final int [] ret = new int[3];
+        int index = 0;
+        for(final String field : timeString.split("-")){
+            ret[index] = Integer.parseInt(field);
+            index++;
+        }
+        return ret;
+    }
+
 
    private void setRegion(final EditText et){
        et.addTextChangedListener(new TextWatcher() {

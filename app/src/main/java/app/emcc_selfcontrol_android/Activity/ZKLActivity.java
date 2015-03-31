@@ -55,7 +55,7 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
         IntentFilter filter = new IntentFilter();
         filter.addAction("zkl.add.dream");
         registerReceiver(myReceiver, filter);
-
+        db=new DBAdapter(ZKLActivity.this);
         dream_time=(TextView) findViewById(R.id.dream_time);
         rest_time=(TextView) findViewById(R.id.rest_time);
         waste_time=(TextView) findViewById(R.id.waste_time);
@@ -85,18 +85,8 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
     }
 
      private void init(){
-            db=new DBAdapter(ZKLActivity.this);
-         /*   db.open();
-         Cursor cursor = null;
-         cursor = db.getAllItem();
-         if (cursor.getCount() < 2) {
-             for (int i = 1; i < 5; i++) {
-                 db.insertItem( "1", "2", "3", "4");
-             }
-         }
-         cursor=db.getItem("1");
-         Toast.makeText(getApplicationContext(),cursor.getColumnCount()+"",Toast.LENGTH_SHORT).show();
-         db.close();*/
+
+
          if(!"".equals(SharePrefrerncesUtil.get(ZKLActivity.this,"dream_name",""))){
              refresh();
          }else{
@@ -225,13 +215,37 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
         stop_dream.setVisibility(View.GONE);
     }
     private void refresh(){
+
         start_dream.setVisibility(View.VISIBLE);
         stop_dream.setVisibility(View.GONE);
         addDream.setVisibility(View.GONE);
         mCircularBarPager.setVisibility(View.VISIBLE);
-        dream_time.setText(SharePrefrerncesUtil.get(ZKLActivity.this,"everyday_goal","")+"小时");
-        rest_time.setText(SharePrefrerncesUtil.get(ZKLActivity.this,"everyday_rest","")+"小时");
+
+        db.open();
+        Cursor cursor=db.getAllItem();
+        cursor.moveToFirst();
+        String curDate=AddDreamActivity.getStringDate(System.currentTimeMillis());
+        while (cursor.moveToNext()) {
+            Log.v("curDate="+curDate,"---"+cursor.getString(cursor
+                    .getColumnIndex("date")));
+            if(curDate.equals(cursor.getString(cursor
+                    .getColumnIndex("date")))){
+
+                dream_time.setText(cursor.getString(cursor
+                        .getColumnIndex("goal_time"))+"小时");
+                rest_time.setText(cursor.getString(cursor
+                        .getColumnIndex("rest_time"))+"小时");
+
+                break;
+
+
+            }
+
+
+        }
+
         waste_time.setText("0小时");
+        db.close();
     }
     public class MyReceiver extends BroadcastReceiver {
         @Override
