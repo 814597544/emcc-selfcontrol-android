@@ -3,6 +3,7 @@ package app.emcc_selfcontrol_android.Activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import app.emcc_selfcontrol_android.DataBase.DBAdapter;
 import app.emcc_selfcontrol_android.R;
 import app.emcc_selfcontrol_android.UI.DateTimePickerDialog;
 import app.emcc_selfcontrol_android.Utils.SharePrefrerncesUtil;
@@ -36,10 +38,10 @@ public class AddDreamActivity extends BaseActivity implements View.OnClickListen
     private ImageView startRili,endRili;
     private EditText dream_name,need_time,mest_view;
     private Button cancel,ok;
-
+    private DBAdapter db;
     private static final int START_RILI=1;
     private static final int END_RILI=2;
-
+    private int betweenDays;
     private int MIN_VALUE=1;
     private int MAX_VALUE=24;
     private int totalTime;
@@ -51,7 +53,7 @@ public class AddDreamActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void initView(){
-
+        db=new DBAdapter(AddDreamActivity.this);
         titleName=(TextView) findViewById(R.id.title);
         titleName.setText("添加梦想");
         end_rili_value=(TextView) findViewById(R.id.end_rili_value);
@@ -198,8 +200,8 @@ public class AddDreamActivity extends BaseActivity implements View.OnClickListen
 
     private void calculate(String smdate,String bdate){
         try {
-            int i=daysBetween(startData, endData);
-            double d=Double.parseDouble(need_time.getText().toString())/i;
+            betweenDays=daysBetween(startData, endData);
+            double d=Double.parseDouble(need_time.getText().toString())/betweenDays;
             mgoal_view.setText(format(d)+"");
             mest_view.setText(24-format(d)+"");
         }catch (ParseException e){
@@ -220,19 +222,24 @@ public class AddDreamActivity extends BaseActivity implements View.OnClickListen
         SharePrefrerncesUtil.put(this,"everyday_goal",mgoal_view.getText().toString());
         SharePrefrerncesUtil.put(this,"everyday_rest",mest_view.getText().toString());
         SharePrefrerncesUtil.put(this,"end_rili_Time",end_rili_value.getText().toString());
-        SharePrefrerncesUtil.put(this,"start_rili_Time",start_rili_value.getText().toString());
-
+        SharePrefrerncesUtil.put(this, "start_rili_Time", start_rili_value.getText().toString());
+        db.open();
+        Cursor cursor = null;
+        cursor = db.getAllItem();
+        if (cursor.getCount() < 2) {
+            for (int i = 0; i < betweenDays; i++) {
+                db.insertItem( "1", "2", "3", "4");
+            }
+        }
+        cursor=db.getItem("1");
+        Toast.makeText(getApplicationContext(),cursor.getCount()+"",Toast.LENGTH_SHORT).show();
+        db.close();
         Intent intent = new Intent();
         intent.setAction("zkl.add.dream");
         sendBroadcast(intent);
         finish();
     }
 
-   private void calculate(int count){
-
-
-
-   }
    private void setRegion(final EditText et){
        et.addTextChangedListener(new TextWatcher() {
            @Override

@@ -11,8 +11,9 @@ import android.util.Log;
 public class DBAdapter {
 
 	private static final String DATABASE_NAME = "zkl.db";
+    private static final String TABLE_NAME = "dream";
 	private static final int DATABASE_VERSION = 1;
-	private static String DATABASE_CREATE="create table dream(_id integer not null primary key autoincrement,date text ,delta_time text ,	rest_time text ,waste_time text)";;
+	private static String DATABASE_CREATE="create table dream(_id integer not null primary key autoincrement,date text ,delta_time text ,	rest_time text ,waste_time text)";
 	private final Context context;
 	private DatabaseHelper DBHelper;
 	private SQLiteDatabase db;
@@ -52,29 +53,29 @@ public class DBAdapter {
 		DBHelper.close();
 	}
 
-    public long insertItem(String tableName,String  id, String date, String delta_time, String rest_time,
+    public long insertItem( String date, String delta_time, String rest_time,
                               String waste_time) {
         ContentValues cv = new ContentValues();
         cv.put("date", date);
         cv.put("delta_time", delta_time);
         cv.put("rest_time", rest_time);
         cv.put("waste_time", waste_time);
-        return  db.insert(tableName, null, cv);
+        return  db.insert(TABLE_NAME, null, cv);
     }
-	public boolean deleteTitle(String tableName,String date) {
-		return db.delete(tableName, "date=" + date, null) > 0;
+	public boolean deleteTitle(String date) {
+		return db.delete(TABLE_NAME, "date=" + date, null) > 0;
 	}
 
 	public Cursor getAllItem() {
-        Cursor mCursor = db.query(tableName,
+        Cursor mCursor = db.query(TABLE_NAME,
                 new String[] { "date", "delta_time", "rest_time", "waste_time",
                 }, null, null,
                 null, null, null);
         return mCursor;
 	}
 
-	public Cursor getItem(String tableName,String date) throws SQLException {
-		Cursor mCursor = db.query(tableName,
+	public Cursor getItem(String date) throws SQLException {
+		Cursor mCursor = db.query(TABLE_NAME,
 				new String[] { "date", "delta_time", "rest_time", "waste_time",
 						 }, "date="+date, null,
 				null, null, null);
@@ -84,14 +85,14 @@ public class DBAdapter {
 		return mCursor;
 	}
 
-	public boolean updateTitle(String tableName,String  id, String date, String delta_time, String rest_time,
+	public boolean updateTitle( String date, String delta_time, String rest_time,
 			String waste_time) {
 		ContentValues cv = new ContentValues();
 		cv.put("date", date);
 		cv.put("delta_time", delta_time);
 		cv.put("rest_time", rest_time);
 		cv.put("waste_time", waste_time);
-		return db.update(tableName, cv,  "date=" + date, null) > 0;
+		return db.update(TABLE_NAME, cv,  "date=" + date, null) > 0;
 	}
 
     public  void setTableName(String tableName){

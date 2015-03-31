@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -85,7 +86,17 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
 
      private void init(){
             db=new DBAdapter(ZKLActivity.this);
-            db.open();
+         /*   db.open();
+         Cursor cursor = null;
+         cursor = db.getAllItem();
+         if (cursor.getCount() < 2) {
+             for (int i = 1; i < 5; i++) {
+                 db.insertItem( "1", "2", "3", "4");
+             }
+         }
+         cursor=db.getItem("1");
+         Toast.makeText(getApplicationContext(),cursor.getColumnCount()+"",Toast.LENGTH_SHORT).show();
+         db.close();*/
          if(!"".equals(SharePrefrerncesUtil.get(ZKLActivity.this,"dream_name",""))){
              refresh();
          }else{
