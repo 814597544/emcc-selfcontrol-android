@@ -21,8 +21,8 @@ import app.emcc_selfcontrol_android.R;
 public class RegisterActivity extends BaseActivity implements
         View.OnClickListener{
     private LinearLayout title_return;
-    private EditText user_name,password,password2;
-    String userName,passWord,passWord2;
+    private EditText user_name,password,password2,user_email;
+    String userName,passWord,passWord2,userEmail;
     private Button finish_r;
     MyAPP appContext;
     @Override
@@ -41,6 +41,7 @@ public class RegisterActivity extends BaseActivity implements
         user_name= (EditText) findViewById(R.id.user_name);
         password= (EditText) findViewById(R.id.password);
         password2= (EditText) findViewById(R.id.password2);
+        user_email= (EditText) findViewById(R.id.user_email);
         finish_r= (Button) findViewById(R.id.finish_r);
         finish_r.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +49,7 @@ public class RegisterActivity extends BaseActivity implements
                 userName=user_name.getText().toString().trim();
                 passWord=password.getText().toString().trim();
                 passWord2=password2.getText().toString().trim();
+                userEmail=user_email.getText().toString().trim();
                 if ("".equals(userName)){
                     Toast.makeText(RegisterActivity.this, "用户名不可以为空！", Toast.LENGTH_SHORT).show();
                 }else if (passWord.length()<6){
@@ -59,7 +61,7 @@ public class RegisterActivity extends BaseActivity implements
                         public void run() {
                             Message msg = new Message();
                             try {
-                                Messages m = appContext.register(userName, passWord, "814597544@qq.com");
+                                Messages m = appContext.register(userName, passWord,userEmail);
                                 msg.obj = m;
                                 msg.what = m != null ? 1 : -1;
                             } catch (Exception e) {

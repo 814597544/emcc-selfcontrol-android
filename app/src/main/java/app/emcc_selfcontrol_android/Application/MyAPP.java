@@ -107,20 +107,12 @@ public class MyAPP extends Application{
         this.login = true;
         setProperties(new Properties() {
             {
+
                 setProperty("user.key", user.getKey());
                 setProperty("user.Email", user.getEmail());
                 setProperty("user.RealName", user.getRealName());// 用户头像-文件名
-                setProperty("user.Nickname", user.getNickname());
-                setProperty("user.gender", user.getGender());
-                setProperty("user.Industry", user.getIndustry());
-                setProperty("user.Income", user.getIncome());
-                setProperty("user.Mobile", user.getMobile());
-                setProperty("user.ProvideCode", user.getProvideCode());
-                setProperty("user.CityCode", user.getCityCode());// 是否记住我的信息
-                setProperty("user.AeraCode", user.getAeraCode());
-                setProperty("user.DetailAddr", user.getDetailAddr());
-                setProperty("user.Postcode", user.getPostcode());
-                setProperty("user.HeadImg", user.getHead_img());
+                setProperty("user.key", user.getUserName());
+
             }
         });
     }

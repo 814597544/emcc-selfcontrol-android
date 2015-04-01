@@ -14,144 +14,271 @@ import org.json.JSONObject;
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 5880128217414516285L;
-	// 错误代码
-	private String erron;
-	// 错误信息
-	private String msg;
-	// 用户唯一标识
-	private String key;
-	// 邮箱
-	private String email;
-	// 真实姓名
-	private String realName;
-	// 昵称
-	private String nickname;
-	// 性别
-	private String gender;
-	// 职业
-	private String industry;
-	// 收入
-	private String income;
-	// 手机号
-	private String mobile;
-	// 省编号
-	private String provideCode;
-	// 市
-	private String cityCode;
-	// 区
-	private String aeraCode;
-	// 详细地址
-	private String detailAddr;
-	// 邮编
-	private String postcode;
-	// 用户头像
-	private String head_img;
+    private String userCode;   //用户编码
+    private String openid;     //微信用户id
+    private String userName;   // 用户名
+    private String nickName;   // 昵称
+    private String realName;   // 真实姓名
+    private String password;   // 密码
+    private String sex;        // 性别（0保密1 男 2 女）
+    private String city;       // 所在城市
+    private String province;   //所在省份
+    private String headimgurl;   //头像地址
+    private String subscribeTime;   //用户编码
+    private String email;   //邮箱
+    private String idCardNO;   //身份证号
+    private String birthday;   //生日
+    private String qq;   //qq
+    private String blog;   //博客或者
+    private String handPhone;   //手机
+    private String telephone;   //电话
+    private String fax;   //传真
+    private String departmentCode;   //单位编号
+    private String zipcode;   //邮编
+    private String homeAddress;   //家庭住址
+    private String address;   //通信地址
+    private String hobby;   //爱好
+    private String occupation;   //职业
+    private String education;   //学历
+    private String incomeLevel;   //收入水平
+    private String userState;   //激活状态
+    // 错误代码
+    private String erron;
+    // 错误信息
+    private String msg;
+    // 用户唯一标识
+    private String key;
 
-	public String getEmail() {
-		return email;
-	}
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getUserCode() {
+        return userCode;
+    }
 
-	public String getRealName() {
-		return realName;
-	}
+    public void setUserCode(String userCode) {
+        this.userCode = userCode;
+    }
 
-	public void setRealName(String realName) {
-		this.realName = realName;
-	}
+    public String getOpenid() {
+        return openid;
+    }
 
-	public String getNickname() {
-		return nickname;
-	}
+    public void setOpenid(String openid) {
+        this.openid = openid;
+    }
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
+    public String getUserName() {
+        return userName;
+    }
 
-	public String getGender() {
-		return gender;
-	}
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
+    public String getNickName() {
+        return nickName;
+    }
 
-	public String getIndustry() {
-		return industry;
-	}
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
 
-	public void setIndustry(String industry) {
-		this.industry = industry;
-	}
+    public String getRealName() {
+        return realName;
+    }
 
-	public String getIncome() {
-		return income;
-	}
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
 
-	public void setIncome(String income) {
-		this.income = income;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public String getMobile() {
-		return mobile;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
+    public String getSex() {
+        return sex;
+    }
 
-	public String getProvideCode() {
-		return provideCode;
-	}
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
 
-	public void setProvideCode(String provideCode) {
-		this.provideCode = provideCode;
-	}
+    public String getCity() {
+        return city;
+    }
 
-	public String getCityCode() {
-		return cityCode;
-	}
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	public void setCityCode(String cityCode) {
-		this.cityCode = cityCode;
-	}
+    public String getProvince() {
+        return province;
+    }
 
-	public String getAeraCode() {
-		return aeraCode;
-	}
+    public void setProvince(String province) {
+        this.province = province;
+    }
 
-	public void setAeraCode(String aeraCode) {
-		this.aeraCode = aeraCode;
-	}
+    public String getHeadimgurl() {
+        return headimgurl;
+    }
 
-	public String getDetailAddr() {
-		return detailAddr;
-	}
+    public void setHeadimgurl(String headimgurl) {
+        this.headimgurl = headimgurl;
+    }
 
-	public void setDetailAddr(String detailAddr) {
-		this.detailAddr = detailAddr;
-	}
+    public String getSubscribeTime() {
+        return subscribeTime;
+    }
 
-	public String getPostcode() {
-		return postcode;
-	}
+    public void setSubscribeTime(String subscribeTime) {
+        this.subscribeTime = subscribeTime;
+    }
 
-	public void setPostcode(String postcode) {
-		this.postcode = postcode;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public String getHead_img() {
-		return head_img;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setHead_img(String head_img) {
-		this.head_img = head_img;
-	}
+    public String getIdCardNO() {
+        return idCardNO;
+    }
 
-	public String getMsg() {
+    public void setIdCardNO(String idCardNO) {
+        this.idCardNO = idCardNO;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
+    }
+
+    public String getBlog() {
+        return blog;
+    }
+
+    public void setBlog(String blog) {
+        this.blog = blog;
+    }
+
+    public String getHandPhone() {
+        return handPhone;
+    }
+
+    public void setHandPhone(String handPhone) {
+        this.handPhone = handPhone;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getFax() {
+        return fax;
+    }
+
+    public void setFax(String fax) {
+        this.fax = fax;
+    }
+
+    public String getDepartmentCode() {
+        return departmentCode;
+    }
+
+    public void setDepartmentCode(String departmentCode) {
+        this.departmentCode = departmentCode;
+    }
+
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
+    }
+
+    public String getHomeAddress() {
+        return homeAddress;
+    }
+
+    public void setHomeAddress(String homeAddress) {
+        this.homeAddress = homeAddress;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getHobby() {
+        return hobby;
+    }
+
+    public void setHobby(String hobby) {
+        this.hobby = hobby;
+    }
+
+    public String getOccupation() {
+        return occupation;
+    }
+
+    public void setOccupation(String occupation) {
+        this.occupation = occupation;
+    }
+
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
+    }
+
+    public String getIncomeLevel() {
+        return incomeLevel;
+    }
+
+    public void setIncomeLevel(String incomeLevel) {
+        this.incomeLevel = incomeLevel;
+    }
+
+    public String getUserState() {
+        return userState;
+    }
+
+    public void setUserState(String userState) {
+        this.userState = userState;
+    }
+
+
+    public String getMsg() {
 		return msg;
 	}
 
@@ -202,17 +329,7 @@ public class User implements Serializable {
 		user.setKey(jsonObj.optString("key"));
 		user.setEmail(jsonObj.optString("email"));
 		user.setRealName(jsonObj.optString("RealName"));
-		user.setNickname(jsonObj.optString("Nickname"));
-		user.setGender(jsonObj.optString("gender"));
-		user.setIndustry(jsonObj.optString("Industry"));
-		user.setIncome(jsonObj.optString("Income"));
-		user.setMobile(jsonObj.optString("Mobile"));
-		user.setProvideCode(jsonObj.optString("ProvideCode"));
-		user.setCityCode(jsonObj.optString("CityCode"));
-		user.setAeraCode(jsonObj.optString("AeraCode"));
-		user.setDetailAddr(jsonObj.optString("DetailAddr"));
-		user.setPostcode(jsonObj.optString("Postcode"));
-		user.setHead_img(jsonObj.optString("HEAD_IMG"));
+		user.setUserName(jsonObj.optString("userName"));
 		return user;
 	}
 

@@ -124,7 +124,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                     intent.setAction("com.emcc.zkl.login");
                     sendBroadcast(intent);
 
-                    finish();
+                   // finish();
                 }
                 Toast.makeText(LoginActivity.this, user.getMsg(), Toast.LENGTH_SHORT).show();
             } else {
