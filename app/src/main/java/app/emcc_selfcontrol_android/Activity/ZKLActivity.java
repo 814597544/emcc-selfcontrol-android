@@ -20,6 +20,7 @@ import app.emcc_selfcontrol_android.DataBase.DBAdapter;
 import app.emcc_selfcontrol_android.R;
 import app.emcc_selfcontrol_android.Utils.DoubleClickExitHelper;
 import app.emcc_selfcontrol_android.Utils.SharePrefrerncesUtil;
+import app.emcc_selfcontrol_android.Utils.StringUtils;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
@@ -27,6 +28,8 @@ import com.github.OrangeGangsters.circularbarpager.library.CircularBarPager;
 import com.nineoldandroids.animation.Animator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.viewpagerindicator.CirclePageIndicator;
+
+import java.util.Calendar;
 
 /**
  * @author Adil Soomro
@@ -61,6 +64,7 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
         waste_time=(TextView) findViewById(R.id.waste_time);
         titleName=(TextView) findViewById(R.id.title);
         titleName.setText("自控力");
+        Log.v("-------------------自控力","");
         circleIcon=(CircleImageView) findViewById(R.id.circleIcon);
         circleIcon.setOnClickListener(this);
         addDream=(ImageView) findViewById(R.id.add);
@@ -224,27 +228,33 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
         db.open();
         Cursor cursor=db.getAllItem();
         cursor.moveToFirst();
-        String curDate=AddDreamActivity.getStringDate(System.currentTimeMillis());
+        String mcurDate=AddDreamActivity.getStringDate(System.currentTimeMillis());
+        Calendar curDate= StringUtils.formatTime(mcurDate);
+
+        if(cursor.getCount()>0&&curDate.equals(StringUtils.formatTime(cursor.getString(cursor
+                .getColumnIndex("date"))))){
+            dream_time.setText(cursor.getString(cursor
+                    .getColumnIndex("goal_time"))+"小时");
+            rest_time.setText(cursor.getString(cursor
+                    .getColumnIndex("rest_time"))+"小时");
+            waste_time.setText(cursor.getString(cursor
+                    .getColumnIndex("waste_time"))+"小时");
+        }
+        else{
         while (cursor.moveToNext()) {
-            Log.v("curDate="+curDate,"---"+cursor.getString(cursor
-                    .getColumnIndex("date")));
-            if(curDate.equals(cursor.getString(cursor
-                    .getColumnIndex("date")))){
-
+            if(curDate.equals(StringUtils.formatTime(cursor.getString(cursor
+                    .getColumnIndex("date"))))){
                 dream_time.setText(cursor.getString(cursor
-                        .getColumnIndex("goal_time"))+"小时");
+                        .getColumnIndex("goal_time")) + "小时");
                 rest_time.setText(cursor.getString(cursor
-                        .getColumnIndex("rest_time"))+"小时");
-
+                        .getColumnIndex("rest_time")) + "小时");
+                waste_time.setText(cursor.getString(cursor
+                        .getColumnIndex("waste_time"))+"小时");
                 break;
-
-
             }
-
-
+        }
         }
 
-        waste_time.setText("0小时");
         db.close();
     }
     public class MyReceiver extends BroadcastReceiver {

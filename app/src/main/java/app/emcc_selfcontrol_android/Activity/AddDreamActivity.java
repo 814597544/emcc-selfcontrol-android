@@ -37,7 +37,7 @@ public class AddDreamActivity extends BaseActivity implements View.OnClickListen
     private TextView titleName,end_rili_value,start_rili_value,mgoal_view;
     private LinearLayout title_return;
     private ImageView startRili,endRili;
-    private EditText dream_name,need_time,mest_view;
+    private EditText dream_name,need_time,rest_time;
     private Button cancel,ok;
     private DBAdapter db;
     private static final int START_RILI=1;
@@ -69,8 +69,8 @@ public class AddDreamActivity extends BaseActivity implements View.OnClickListen
         dream_name=(EditText) findViewById(R.id.deram_name);
         need_time=(EditText) findViewById(R.id.need_time);
         mgoal_view=(TextView) findViewById(R.id.mgoal_view);
-        mest_view=(EditText) findViewById(R.id.mest_view);
-
+        rest_time=(EditText) findViewById(R.id.mest_view);
+        rest_time.setText("12");
         cancel=(Button) findViewById(R.id.cancel);
         cancel.setOnClickListener(this);
         ok=(Button) findViewById(R.id.ok);
@@ -204,31 +204,46 @@ public class AddDreamActivity extends BaseActivity implements View.OnClickListen
             betweenDays=daysBetween(startData, endData);
             double d=Double.parseDouble(need_time.getText().toString())/betweenDays;
             mgoal_view.setText(format(d)+"");
-            mest_view.setText(24-format(d)+"");
+            if(24-format(d)>=12){
+                rest_time.setText("12");
+            }else {
+                rest_time.setText(format(24 - format(d)) + "");
+            }
         }catch (ParseException e){
 
         }
     }
 
     private void modifyDream(){
-        if(StringUtils.isEmpty(dream_name.getText().toString())||StringUtils.isEmpty(need_time.getText().toString())
-               ||StringUtils.isEmpty(mest_view.getText().toString())
-                ||StringUtils.isEmpty(end_rili_value.getText().toString())||StringUtils.isEmpty(start_rili_value.getText().toString()))
+        String dreamName=dream_name.getText().toString();
+        String goalTime=mgoal_view.getText().toString();
+        String needTime=need_time.getText().toString();
+        String restTime=rest_time.getText().toString();
+        String endRili=end_rili_value.getText().toString();
+        String startRili=start_rili_value.getText().toString();
+
+        if(StringUtils.isEmpty(dreamName)||StringUtils.isEmpty(needTime)
+               ||StringUtils.isEmpty(restTime)||StringUtils.isEmpty(goalTime)
+                ||StringUtils.isEmpty(endRili)||StringUtils.isEmpty(startRili))
         {
             Toast.makeText(getApplicationContext(),"请编辑所有信息",Toast.LENGTH_SHORT).show();
             return;
         }
-        String dreamName=dream_name.getText().toString();
-        String goalTime=mgoal_view.getText().toString();
-        String restTime=mest_view.getText().toString();
-        SharePrefrerncesUtil.put(this,"dream_name",dream_name.getText().toString());
-        SharePrefrerncesUtil.put(this,"need_time",need_time.getText().toString());
-        SharePrefrerncesUtil.put(this,"everyday_goal",mgoal_view.getText().toString());
-        SharePrefrerncesUtil.put(this,"everyday_rest",mest_view.getText().toString());
-        SharePrefrerncesUtil.put(this,"end_rili_Time",end_rili_value.getText().toString());
-        SharePrefrerncesUtil.put(this, "start_rili_Time", start_rili_value.getText().toString());
+        if(Double.parseDouble(goalTime)+Double.parseDouble(restTime)>24){
 
-        initDataBase(dreamName,goalTime,restTime,start_rili_value.getText().toString(),end_rili_value.getText().toString());
+            Toast.makeText(getApplicationContext(),"休息与梦想时间之和不可超过24小时",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+        SharePrefrerncesUtil.put(this,"dream_name",dreamName);
+        SharePrefrerncesUtil.put(this,"need_time",needTime);
+        SharePrefrerncesUtil.put(this,"everyday_goal",goalTime);
+        SharePrefrerncesUtil.put(this,"everyday_rest",restTime);
+        SharePrefrerncesUtil.put(this,"end_rili_Time",endRili);
+        SharePrefrerncesUtil.put(this, "start_rili_Time",startRili);
+
+        initDataBase(dreamName,goalTime,restTime,startRili,endRili);
 
         Intent intent = new Intent();
         intent.setAction("zkl.add.dream");
@@ -239,29 +254,25 @@ public class AddDreamActivity extends BaseActivity implements View.OnClickListen
 
     private void initDataBase(final String dreamName,final String goalTime,final String restTime,final String startTime, final String endTime){
 
-        Log.v("start_time="+startTime,"--------------------");
+        Log.v("--start_time="+startTime,"--------------------");
         Calendar start = Calendar.getInstance();
         Calendar end = Calendar.getInstance();
         int[] date = parseTime(startTime);
         start.set(date[0], date[1], date[2]);
+        Log.v("s--date[0]="+date[0]+"-"+date[1]+"-"+date[2],"--------------------");
         date = parseTime(endTime);
         end.set(date[0], date[1], date[2]);
-
         db.open();
         Cursor cursor = null;
         cursor = db.getAllItem();
-        Log.v("date[0]="+date[0]+"-"+date[1]+"-"+date[2],"--------------------");
-        while(start.before(end)||start.equals(end)){
-
-            db.insertItem(dreamName, start.get(Calendar.YEAR)+"-"+start.get(Calendar.MONTH)+"-"+start.get(Calendar.DATE), "", restTime, "",goalTime);
+        Log.v("e--date[0]="+date[0]+"-"+date[1]+"-"+date[2],"--------------------");
+        double xuduTime=24-Double.parseDouble(goalTime)-Double.parseDouble(restTime);
+        while(start.before(end)){
             System.out.println(start.get(Calendar.YEAR)+"-"+start.get(Calendar.MONTH)+"-"+start.get(Calendar.DATE));
+            db.insertItem(dreamName, start.get(Calendar.YEAR)+"-"+start.get(Calendar.MONTH)+"-"+start.get(Calendar.DATE), "", restTime, xuduTime+"",goalTime,"0");
             start.add(Calendar.DATE, 1);
         }
-
-        cursor=db.getItem("dream_name");
-        Toast.makeText(getApplicationContext(),cursor.getCount()+"",Toast.LENGTH_SHORT).show();
         db.close();
-
     }
 
     private int[] parseTime(final String timeString){
@@ -275,42 +286,6 @@ public class AddDreamActivity extends BaseActivity implements View.OnClickListen
     }
 
 
-   private void setRegion(final EditText et){
-       et.addTextChangedListener(new TextWatcher() {
-           @Override
-           public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-           }
-
-           @Override
-           public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (start>0){
-                    if (MIN_VALUE!=-1&&MAX_VALUE!=-1){
-                        int num=Integer.parseInt(s.toString());
-                        if (num>MAX_VALUE){
-                            s=String.valueOf(MAX_VALUE);
-                            et.setText(s);
-                        }
-                        else if (num<MIN_VALUE){
-                            s=String.valueOf(MIN_VALUE);
-                            return;
-                        }
-
-                    }
-
-                }
-
-           }
-
-
-           @Override
-           public void afterTextChanged(Editable s) {
-
-           }
-       });
-
-
-   }
     public double format(double f){
         BigDecimal b   =   new   BigDecimal(f);
         double   f1   =   b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
