@@ -1,15 +1,14 @@
 package app.emcc_selfcontrol_android.Http;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
+
 import java.net.URLEncoder;
-import java.security.MessageDigest;
+
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,12 +16,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.UUID;
+
 
 import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.cookie.CookiePolicy;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.params.HttpMethodParams;
@@ -31,23 +29,28 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.params.CookiePolicy;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
+
 import org.json.JSONException;
-import org.json.JSONObject;
+
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+
+import android.util.Log;
+
+import app.emcc_selfcontrol_android.Application.Messages;
+import app.emcc_selfcontrol_android.Application.MyAPP;
+import app.emcc_selfcontrol_android.Application.User;
 
 
 public class ApiClient {
     public static final String UTF_8 = "UTF-8";
-    private static final String DOMAIN_NAME = "http://www.chinart500.com";
-    public static final String USERPROTACAL = "http://www.chinart500.com/user/RegProtocol.html";
+    private static final String DOMAIN_NAME = "http://wx.zaixianchuangxin.com:88/zkl";
+    public static final String USERPROTACAL = "";
 
     /**
      * HTTP协议属性配置
@@ -55,6 +58,7 @@ public class ApiClient {
      * @return
      */
     private static HttpClient getHttpClient() {
+
         HttpClient httpClient = new HttpClient();
         // 设置 HttpClient 接收 Cookie,用与浏览器一样的策略
         httpClient.getParams().setCookiePolicy(CookiePolicy.BROWSER_COMPATIBILITY);
@@ -67,6 +71,7 @@ public class ApiClient {
         // 设置 字符
         httpClient.getParams().setContentCharset(UTF_8);
         return httpClient;
+
     }
 
     private static GetMethod getHttpGet(String url) {
@@ -266,6 +271,28 @@ public class ApiClient {
         return bitmap;
     }
 
+    public static User getUser(MyAPP appContext, String userName, String passWord) throws IOException, JSONException, NoSuchAlgorithmException, Exception {
+        String url = DOMAIN_NAME + "/mobile/loginaction!userLogin.action";
+        Map<String, Object> params = new LinkedHashMap<String, Object>();
+        params.put("userName", userName);
+        params.put("password", passWord);
+        String str = http_post(params, url);
+        Log.e("str==",str);
+        return User.parse(str);
+    }
+
+    public static Messages register(MyAPP appContext, String uname, String upass,String email) throws Exception {
+        String url = DOMAIN_NAME + "/mobile/loginaction!userRegist.action";
+        Map<String, Object> params = new HashMap<String, Object>();
+
+        params.put("userName", uname);
+        params.put("password", upass);
+        params.put("email", email);
+
+        String str = http_post(params, url);
+        Log.e("str==",str);
+        return Messages.parse(str);
+    }
 
 
 }
