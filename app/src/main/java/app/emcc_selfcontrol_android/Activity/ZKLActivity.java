@@ -166,7 +166,7 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
 
         ViewPager viewPager = mCircularBarPager.getViewPager();
         viewPager.setClipToPadding(true);
-
+        /*aaaa*/
         CirclePageIndicator circlePageIndicator = mCircularBarPager.getCirclePageIndicator();
         circlePageIndicator.setFillColor(getResources().getColor(R.color.light_grey));
         circlePageIndicator.setPageColor(getResources().getColor(R.color.very_light_grey));
