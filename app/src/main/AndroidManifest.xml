@@ -58,6 +58,12 @@
         <activity android:name="app.emcc_selfcontrol_android.Activity.CalendarActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:screenOrientation="portrait" />
+
+        <service android:name="app.emcc_selfcontrol_android.UI.MyBindService">
+            <intent-filter >
+                <action android:name="com.emcc.zkl.furao"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
