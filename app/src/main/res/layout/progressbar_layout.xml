@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="13sp"
                 android:textColor="#037083"
-                android:text="8小时"
+                android:text="0小时"
              />
                     </LinearLayout>
 
@@ -121,7 +121,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="15sp"
                         android:textColor="#037083"
-                        android:text="8小时"
+                        android:text="0小时"
                         />
             </LinearLayout>
 
@@ -160,7 +160,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="15sp"
                         android:textColor="#037083"
-                        android:text="8小时"
+                        android:text="0小时"
                         />
                 </LinearLayout>
 

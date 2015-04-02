@@ -151,7 +151,7 @@ public class AddDreamActivity extends BaseActivity implements View.OnClickListen
      * 将长时间格式字符串转换为时间 yyyy-MM-dd
      *
      */
-    public static String getStringDate(Long date)
+    public  String getStringDate(Long date)
     {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String dateString = formatter.format(date);
@@ -243,7 +243,7 @@ public class AddDreamActivity extends BaseActivity implements View.OnClickListen
         SharePrefrerncesUtil.put(this,"end_rili_Time",endRili);
         SharePrefrerncesUtil.put(this, "start_rili_Time",startRili);
 
-        initDataBase(dreamName,goalTime,restTime,startRili,endRili);
+        initDataBase(dreamName,goalTime,restTime,needTime,startRili,endRili);
 
         Intent intent = new Intent();
         intent.setAction("zkl.add.dream");
@@ -252,7 +252,7 @@ public class AddDreamActivity extends BaseActivity implements View.OnClickListen
     }
 
 
-    private void initDataBase(final String dreamName,final String goalTime,final String restTime,final String startTime, final String endTime){
+    private void initDataBase(final String dreamName,final String goalTime,final String restTime,final String needTime,final String startTime, final String endTime){
 
         Log.v("--start_time="+startTime,"--------------------");
         Calendar start = Calendar.getInstance();
@@ -267,11 +267,23 @@ public class AddDreamActivity extends BaseActivity implements View.OnClickListen
         cursor = db.getAllItem();
         Log.v("e--date[0]="+date[0]+"-"+date[1]+"-"+date[2],"--------------------");
         double xuduTime=24-Double.parseDouble(goalTime)-Double.parseDouble(restTime);
+        String m ,d;
         while(start.before(end)){
             System.out.println(start.get(Calendar.YEAR)+"-"+start.get(Calendar.MONTH)+"-"+start.get(Calendar.DATE));
-            db.insertItem(dreamName, start.get(Calendar.YEAR)+"-"+start.get(Calendar.MONTH)+"-"+start.get(Calendar.DATE), "", restTime, xuduTime+"",goalTime,"0");
+            if(start.get(Calendar.MONTH)>9){
+                m=start.get(Calendar.MONTH)+"";
+            }else{
+                m="0"+start.get(Calendar.MONTH);
+            }
+            if(start.get(Calendar.DATE)>9){
+                d=start.get(Calendar.DATE)+"";
+            }else{
+                d="0"+start.get(Calendar.DATE);
+            }
+            db.insertItem(dreamName, start.get(Calendar.YEAR)+"-"+m+"-"+d, "0", restTime, xuduTime+"",goalTime,needTime,"0");
             start.add(Calendar.DATE, 1);
         }
+        cursor.close();
         db.close();
     }
 

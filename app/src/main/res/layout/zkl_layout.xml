@@ -34,6 +34,17 @@
         android:src="@drawable/add"
        />
     <ImageView
+        android:id="@+id/no_task"
+        android:layout_height="230dp"
+        android:layout_width="230dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:layout_marginTop="35dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/no_goal"
+        android:visibility="gone"
+        />
+    <ImageView
         android:id="@+id/start_dream"
         android:layout_height="230dp"
         android:layout_width="230dp"
@@ -55,15 +66,28 @@
         android:src="@drawable/stop"
         android:visibility="gone"
         />
+
 </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/run_time"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/dreame_progress">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_color"
+            android:textSize="25sp"
+            android:text="00:00:00"/>
+        </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:orientation="vertical"
-        android:layout_below="@+id/dreame_progress" >
-
+        android:layout_below="@+id/run_time" >
 
         <include layout="@layout/progressbar_layout"/>
 

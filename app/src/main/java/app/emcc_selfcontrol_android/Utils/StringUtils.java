@@ -46,7 +46,7 @@ public class StringUtils {
 		}
 		return false;
 	}
-    public static Calendar formatTime(final String timeString){
+    public  Calendar formatTime(final String timeString){
         final int [] ret = new int[3];
         int index = 0;
         for(final String field : timeString.split("-")){

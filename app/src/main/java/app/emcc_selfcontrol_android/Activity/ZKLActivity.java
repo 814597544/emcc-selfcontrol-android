@@ -29,6 +29,7 @@ import com.nineoldandroids.animation.Animator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.viewpagerindicator.CirclePageIndicator;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -36,15 +37,18 @@ import java.util.Calendar;
  *
  */
 public class ZKLActivity extends BaseActivity implements View.OnClickListener{
-
+    private  String mcurDate;
+    private  Calendar curDate,tempDate;
+    private Cursor cursor;
     private MyReceiver myReceiver;
     private RoundCornerProgressBar progressTwo;
     private CircleImageView circleIcon;
     private CircularBarPager mCircularBarPager;
     private TextView titleName,dream_time,rest_time,waste_time;
-    private ImageView addDream,start_dream,stop_dream;
+    private ImageView addDream,start_dream,stop_dream,no_task;
     private DoubleClickExitHelper mDoubleClickExitHelper;
     private DBAdapter db;
+    private  boolean hasTask= false;
     /**
      * The animation time in milliseconds that we take to display the steps taken
      */
@@ -64,7 +68,6 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
         waste_time=(TextView) findViewById(R.id.waste_time);
         titleName=(TextView) findViewById(R.id.title);
         titleName.setText("自控力");
-        Log.v("-------------------自控力","");
         circleIcon=(CircleImageView) findViewById(R.id.circleIcon);
         circleIcon.setOnClickListener(this);
         addDream=(ImageView) findViewById(R.id.add);
@@ -73,13 +76,14 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
         start_dream.setOnClickListener(this);
         stop_dream=(ImageView) findViewById(R.id.stop_dream);
         stop_dream.setOnClickListener(this);
-
+        no_task=(ImageView) findViewById(R.id.stop_dream);
+        no_task.setOnClickListener(this);
 
         mDoubleClickExitHelper = new DoubleClickExitHelper(this);
 
         ImageLoader.getInstance().displayImage("https://coding.net/static/fruit_avatar/Fruit-1.png", circleIcon);
         progressTwo = (RoundCornerProgressBar) findViewById(R.id.progress_two);
-        progressTwo.setBackgroundColor(getResources().getColor(R.color.custom_progress_background));
+        progressTwo.setBackgroundColor(getResources().getColor(R.color.main_color));
 
         updateProgressTwo();
         initViews();
@@ -120,6 +124,9 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
                 break;
             case R.id.stop_dream :
                 stop();
+                break;
+            case R.id.no_task :
+                Toast.makeText(ZKLActivity.this,"今日暂无任务",Toast.LENGTH_SHORT).show();
                 break;
             default:
 
@@ -220,42 +227,84 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
     }
     private void refresh(){
 
-        start_dream.setVisibility(View.VISIBLE);
-        stop_dream.setVisibility(View.GONE);
-        addDream.setVisibility(View.GONE);
-        mCircularBarPager.setVisibility(View.VISIBLE);
+
 
         db.open();
-        Cursor cursor=db.getAllItem();
+         cursor=db.getAllItem();
         cursor.moveToFirst();
-        String mcurDate=AddDreamActivity.getStringDate(System.currentTimeMillis());
-        Calendar curDate= StringUtils.formatTime(mcurDate);
-
-        if(cursor.getCount()>0&&curDate.equals(StringUtils.formatTime(cursor.getString(cursor
-                .getColumnIndex("date"))))){
+         mcurDate=getStringDate(System.currentTimeMillis());
+        if (cursor.getCount() > 0) {
+        if(mcurDate.equals(cursor.getString(cursor
+                .getColumnIndex("date")))){
+            hasTask=true;
+            showView();
             dream_time.setText(cursor.getString(cursor
                     .getColumnIndex("goal_time"))+"小时");
             rest_time.setText(cursor.getString(cursor
                     .getColumnIndex("rest_time"))+"小时");
             waste_time.setText(cursor.getString(cursor
                     .getColumnIndex("waste_time"))+"小时");
-        }
-        else{
-        while (cursor.moveToNext()) {
-            if(curDate.equals(StringUtils.formatTime(cursor.getString(cursor
-                    .getColumnIndex("date"))))){
-                dream_time.setText(cursor.getString(cursor
-                        .getColumnIndex("goal_time")) + "小时");
-                rest_time.setText(cursor.getString(cursor
-                        .getColumnIndex("rest_time")) + "小时");
-                waste_time.setText(cursor.getString(cursor
-                        .getColumnIndex("waste_time"))+"小时");
-                break;
+
+            if("0".equals(cursor.getString(cursor
+                    .getColumnIndex("goal_time")))){
+                addDream.setVisibility(View.GONE);
+                start_dream.setVisibility(View.GONE);
+                stop_dream.setVisibility(View.GONE);
+                addDream.setVisibility(View.GONE);
+                no_task.setVisibility(View.VISIBLE);
+                progressTwo.setProgress(10);
+
+            }else{
+                progressTwo.setProgress((int)(getTime(cursor,"delta_time")/getTime(cursor,"need_time")*10));
             }
+
+            cursor.close();
+            db.close();
+        }
+        else {
+
+                while (cursor.moveToNext()) {
+
+                    if(mcurDate.equals(cursor.getString(cursor
+                            .getColumnIndex("date")))){
+                        hasTask=true;
+                        showView();
+                        dream_time.setText(cursor.getString(cursor
+                                .getColumnIndex("goal_time")) + "小时");
+                        rest_time.setText(cursor.getString(cursor
+                                .getColumnIndex("rest_time")) + "小时");
+                        waste_time.setText(cursor.getString(cursor
+                                .getColumnIndex("waste_time")) + "小时");
+                        if ("0".equals(cursor.getString(cursor
+                                .getColumnIndex("goal_time")))) {
+                            addDream.setVisibility(View.GONE);
+                            start_dream.setVisibility(View.GONE);
+                            stop_dream.setVisibility(View.GONE);
+                            addDream.setVisibility(View.GONE);
+                            no_task.setVisibility(View.VISIBLE);
+                            progressTwo.setProgress(10);
+
+                        } else {
+                            progressTwo.setProgress((int)(getTime(cursor,"delta_time")/getTime(cursor,"need_time")*10));
+                        }
+                        break;
+                    }
+                }
+            cursor.close();
+            db.close();
         }
         }
 
-        db.close();
+        if(!hasTask){
+            addDream.setVisibility(View.GONE);
+            no_task.setVisibility(View.VISIBLE);
+            dream_time.setText("0小时");
+            rest_time.setText("24小时");
+            waste_time.setText("0小时");
+
+
+        }
+
     }
     public class MyReceiver extends BroadcastReceiver {
         @Override
@@ -265,12 +314,25 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
 
         }
     }
+    public  String getStringDate(Long date)
+    {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString = formatter.format(date);
+
+        return dateString;
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(myReceiver);
     }
-
+private void showView(){
+    start_dream.setVisibility(View.VISIBLE);
+    stop_dream.setVisibility(View.GONE);
+    addDream.setVisibility(View.GONE);
+    no_task.setVisibility(View.GONE);
+    mCircularBarPager.setVisibility(View.VISIBLE);
+}
     /**
      * 监听返回--是否退出程序
      */
@@ -284,5 +346,11 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
             flag = super.onKeyDown(keyCode, event);
         }
         return flag;
+    }
+    private double getTime(Cursor cursor,String key){
+        double time=Double.parseDouble(cursor.getString(cursor
+                .getColumnIndex(key)));
+
+            return time;
     }
 }
