@@ -26,14 +26,20 @@ package app.emcc_selfcontrol_android.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import app.emcc_selfcontrol_android.Interface.UpdateState;
 import app.emcc_selfcontrol_android.R;
 /**
  * Created by oliviergoutay on 12/8/14.
  */
-public class CircularInnerViewActivity extends LinearLayout {
+public class CircularInnerViewActivity extends LinearLayout implements UpdateState{
     /**
      * TAG for logging
      */
+    private TextView user_top_textview;
+    private TextView value_info_textview;
+    private TextView user_bottom_textview;
     private static final String TAG = "HomeUserView";
 
     public CircularInnerViewActivity(Context context) {
@@ -44,7 +50,24 @@ public class CircularInnerViewActivity extends LinearLayout {
     private void initView() {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final LinearLayout mainV = (LinearLayout) inflater.inflate(R.layout.view_user_info, this);
+        user_top_textview=(TextView)mainV.findViewById(R.id.user_top_textview);
+        value_info_textview=(TextView)mainV.findViewById(R.id.value_info_textview);
+        user_bottom_textview=(TextView)mainV.findViewById(R.id.user_bottom_textview);
         //TODO init view
     }
 
+    @Override
+    public void updateDreamName(String name) {
+        user_top_textview.setText(name);
+    }
+
+    @Override
+    public void updateDreamProgress(String name) {
+        value_info_textview.setText(name);
+    }
+
+    @Override
+    public void updateDreamToole(String name) {
+        user_bottom_textview.setText(name);
+    }
 }

@@ -16,7 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import app.emcc_selfcontrol_android.Adapter.CircularPagerAdapter;
+import app.emcc_selfcontrol_android.Application.MyAPP;
 import app.emcc_selfcontrol_android.DataBase.DBAdapter;
+import app.emcc_selfcontrol_android.Interface.UpdateState;
 import app.emcc_selfcontrol_android.R;
 import app.emcc_selfcontrol_android.Utils.DoubleClickExitHelper;
 import app.emcc_selfcontrol_android.Utils.SharePrefrerncesUtil;
@@ -49,6 +51,9 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
     private DoubleClickExitHelper mDoubleClickExitHelper;
     private DBAdapter db;
     private  boolean hasTask= false;
+    private MyAPP myAPP;
+    private CircularInnerViewActivity mCircularInnerViewActivity;
+    private UpdateState mCallBack;
     /**
      * The animation time in milliseconds that we take to display the steps taken
      */
@@ -63,6 +68,7 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
         filter.addAction("zkl.add.dream");
         registerReceiver(myReceiver, filter);
         db=new DBAdapter(ZKLActivity.this);
+        myAPP=(MyAPP)getApplication();
         dream_time=(TextView) findViewById(R.id.dream_time);
         rest_time=(TextView) findViewById(R.id.rest_time);
         waste_time=(TextView) findViewById(R.id.waste_time);
@@ -117,7 +123,12 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
                 startActivity(new Intent(ZKLActivity.this,AddDreamActivity.class));
                 break;
             case R.id.circleIcon :
-                startActivity(new Intent(ZKLActivity.this,LoginActivity.class));
+                if(myAPP.isLogin()){
+                    startActivity(new Intent(ZKLActivity.this,UserInfoActivity.class));
+                }
+                else{
+                    startActivity(new Intent(ZKLActivity.this,LoginActivity.class));
+                }
                 break;
             case R.id.start_dream :
                 start();
@@ -152,15 +163,17 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
     @Override
     protected void onResume() {
         super.onResume();
-        mCircularBarPager.getCircularBar().animateProgress(0, 75, 1000);
+        mCircularBarPager.getCircularBar().animateProgress(0, 0, 1000);
     }
 
     private void initViews(){
         mCircularBarPager = (CircularBarPager) findViewById(R.id.circularBarPager);
 
-        View[] views = new View[2];
-        views[0] = new CircularInnerViewActivity(this);
-        views[1] = new CircularInnerViewActivity(this);
+        View[] views = new View[1];
+        mCircularInnerViewActivity = new CircularInnerViewActivity(this);
+        views[0]=mCircularInnerViewActivity;
+        mCallBack=(UpdateState)mCircularInnerViewActivity;
+       /* views[1] = new CircularInnerViewActivity(this);*/
 
         mCircularBarPager.setViewPagerAdapter(new CircularPagerAdapter(this, views));
 
@@ -217,11 +230,13 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
     }
 
     private void start(){
+        mCallBack.updateDreamToole("暂停");
         start_dream.setVisibility(View.GONE);
         stop_dream.setVisibility(View.VISIBLE);
     }
 
     private void stop(){
+        mCallBack.updateDreamToole("开始");
         start_dream.setVisibility(View.VISIBLE);
         stop_dream.setVisibility(View.GONE);
     }
