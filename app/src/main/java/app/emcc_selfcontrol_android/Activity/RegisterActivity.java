@@ -1,6 +1,5 @@
 package app.emcc_selfcontrol_android.Activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,17 +13,22 @@ import android.widget.Toast;
 import app.emcc_selfcontrol_android.Application.Messages;
 import app.emcc_selfcontrol_android.Application.MyAPP;
 import app.emcc_selfcontrol_android.R;
+import app.emcc_selfcontrol_android.UI.LoadingDialog;
+
 
 /**
  * Created by lenovo on 2015/3/23.
  */
 public class RegisterActivity extends BaseActivity implements
         View.OnClickListener{
+
     private LinearLayout title_return;
     private EditText user_name,password,password2,user_email;
     String userName,passWord,passWord2,userEmail;
     private Button finish_r;
     MyAPP appContext;
+    LoadingDialog dialog1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +38,9 @@ public class RegisterActivity extends BaseActivity implements
     }
 
     private void findView() {
+
         appContext= (MyAPP) getApplication();
+        dialog1 = new LoadingDialog(this);
         title_return=(LinearLayout) findViewById(R.id.title_return);
         title_return.setOnClickListener(this);
 
@@ -59,6 +65,7 @@ public class RegisterActivity extends BaseActivity implements
                 }else{
                     new Thread() {
                         public void run() {
+                            dialog1.show();
                             Message msg = new Message();
                             try {
                                 Messages m = appContext.register(userName, passWord,userEmail);
@@ -118,6 +125,7 @@ public class RegisterActivity extends BaseActivity implements
             else if (msg.what == -3)  {
                 Toast.makeText(RegisterActivity.this, "网络出现异常", Toast.LENGTH_SHORT).show();
             }
+            dialog1.dismiss();
         }
     };
 }

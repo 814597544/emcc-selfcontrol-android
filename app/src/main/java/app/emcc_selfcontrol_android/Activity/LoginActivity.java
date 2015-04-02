@@ -15,6 +15,8 @@ import android.widget.Toast;
 import app.emcc_selfcontrol_android.Application.MyAPP;
 import app.emcc_selfcontrol_android.Application.User;
 import app.emcc_selfcontrol_android.R;
+import app.emcc_selfcontrol_android.UI.LoadingDialog;
+
 /**
  * Created by lenovo on 2015/3/4.
  */
@@ -34,6 +36,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     private MyAPP appContext;
     // 用户唯一标识key
     private User user;
+    LoadingDialog dialog1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,8 +67,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                     Toast.makeText(LoginActivity.this, "密码不可以为空！",Toast.LENGTH_SHORT).show();
                     passWord.requestFocus();
                 }else{
+                    dialog1.show();
                     new Thread() {
                         public void run() {
+
                             Message msg = new Message();
                             try {
                                 user = appContext.getUser(uname, upass);
@@ -89,6 +94,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     }
 
     private void findView() {
+        dialog1 = new LoadingDialog(this);
         appContext = (MyAPP) getApplication();
         user = new User();
         userName= (EditText) findViewById(R.id.edit_login_name);
@@ -124,9 +130,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                     intent.setAction("com.emcc.zkl.login");
                     sendBroadcast(intent);
 
-                   // finish();
                 }
+                dialog1.dismiss();
                 Toast.makeText(LoginActivity.this, user.getMsg(), Toast.LENGTH_SHORT).show();
+                finish();
             } else {
 
                 ac.cleanLoginInfo();//清除登录信息
