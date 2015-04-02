@@ -2,11 +2,14 @@ package app.emcc_selfcontrol_android.Activity;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -20,6 +23,7 @@ import app.emcc_selfcontrol_android.Application.MyAPP;
 import app.emcc_selfcontrol_android.DataBase.DBAdapter;
 import app.emcc_selfcontrol_android.Interface.UpdateState;
 import app.emcc_selfcontrol_android.R;
+import app.emcc_selfcontrol_android.UI.MyBindService;
 import app.emcc_selfcontrol_android.Utils.DoubleClickExitHelper;
 import app.emcc_selfcontrol_android.Utils.SharePrefrerncesUtil;
 import app.emcc_selfcontrol_android.Utils.StringUtils;
@@ -33,6 +37,9 @@ import com.viewpagerindicator.CirclePageIndicator;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * @author Adil Soomro
@@ -46,12 +53,17 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
     private RoundCornerProgressBar progressTwo;
     private CircleImageView circleIcon;
     private CircularBarPager mCircularBarPager;
-    private TextView titleName,dream_time,rest_time,waste_time;
+    private TextView titleName,dream_time,rest_time,waste_time,show_finishtime;
     private ImageView addDream,start_dream,stop_dream,no_task;
     private DoubleClickExitHelper mDoubleClickExitHelper;
     private DBAdapter db;
     private  boolean hasTask= false;
+    private TimerTask task = null;
+    private Timer time = null;
     private MyAPP myAPP;
+    boolean test=false;
+    MyBindService.MyBinder binder;
+
     private CircularInnerViewActivity mCircularInnerViewActivity;
     private UpdateState mCallBack;
     /**
@@ -59,6 +71,26 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
      */
     private static final int BAR_ANIMATION_TIME = 1000;
     private int progress2 = 5;
+
+
+    private ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+        }
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            // 取得Service对象中的Binder对象
+            binder = (MyBindService.MyBinder) service;
+        }
+    };
+
+
+
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +110,7 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
         circleIcon.setOnClickListener(this);
         addDream=(ImageView) findViewById(R.id.add);
         addDream.setOnClickListener(this);
+        show_finishtime=(TextView) findViewById(R.id.show_finishtime);
         start_dream=(ImageView) findViewById(R.id.start_dream);
         start_dream.setOnClickListener(this);
         stop_dream=(ImageView) findViewById(R.id.stop_dream);
@@ -233,12 +266,62 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
         mCallBack.updateDreamToole("暂停");
         start_dream.setVisibility(View.GONE);
         stop_dream.setVisibility(View.VISIBLE);
+        final Intent intent = new Intent();
+        // 指定开启服务的action
+        intent.setAction("com.emcc.zkl.furao");
+
+                /*@@@@@@@在普通的activity中绑定和解绑bindservice时用bindservice，但在Tab的activity中要用getApplicationContext().bindService@@@@@@@*/
+        getApplicationContext().bindService(intent, connection, Context.BIND_AUTO_CREATE);
+        Log.e("start------","start");
+        startTimer();
     }
 
     private void stop(){
         mCallBack.updateDreamToole("开始");
         start_dream.setVisibility(View.VISIBLE);
         stop_dream.setVisibility(View.GONE);
+        // 绑定服务到当前activity中
+
+        stopTimer();
+        // 解除绑定
+        binder=null;
+        getApplicationContext().unbindService(connection);
+    }
+    //启动定时器
+    private void startTimer() {
+		/* 启动定时器，每5秒自动切换展示图 */
+        if (task == null) {
+            task = new TimerTask() {
+                @Override
+                public void run() {
+                    Log.e("******",binder.getCount()+"");
+                    progress2=10*(binder.getCount())/(36*1);
+                /* ------发送广播------*/
+                    test=true;
+                    Log.e("$$$$$$$","progress2="+progress2);
+                    Intent intent2 = new Intent();
+                    intent2.setAction("zkl.add.dream");
+                    sendBroadcast(intent2);
+                }
+            };
+        }
+
+        if (time == null) {
+            time = new Timer();
+        }
+        time.schedule(task, 1000, 1000);
+    }
+    //关闭定时器
+    private void stopTimer() {
+		/* 暂停定时器 */
+        if (task != null) {
+            task.cancel();
+            task = null;
+        }
+        if (time != null) {
+            time.cancel();
+            time = null;
+        }
     }
     private void refresh(){
 
@@ -325,7 +408,11 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
         @Override
         public void onReceive(final Context context, Intent intent) {
 
-            refresh();
+            if (test==true) {
+                todayFinish(binder.getCount());
+                progressTwo.setProgress(progress2);
+                updateProgressTwoColor();
+            }else{refresh();}
 
         }
     }
@@ -367,5 +454,17 @@ private void showView(){
                 .getColumnIndex(key)));
 
             return time;
+    }
+
+
+    private void todayFinish(int time){
+        int H=time/3600;
+        int M=(time%3600)/60;
+        int S=(time%3600)%60;
+        String HH,MM, SS;
+        if (H<10){HH="0"+H;}else{HH=""+H;}
+        if (M<10){MM="0"+M;}else{MM=""+M;}
+        if (S<10){SS="0"+S;}else{SS=""+S;}
+        show_finishtime.setText(HH+":"+MM+":"+SS);
     }
 }
