@@ -81,13 +81,23 @@ public class DBAdapter {
 	public Cursor getItem(String dream_name) throws SQLException {
 		Cursor mCursor = db.query(TABLE_NAME,
 				new String[] {"dream_name", "date", "delta_time", "rest_time", "waste_time",
-                        "goal_time","need_time","completed_goals"}, "dream_name="+dream_name, null,
+                        "goal_time","need_time","completed_goals"}, "dream_name='"+dream_name+"'", null,
 				null, null, null);
 		if (mCursor != null) {
 			mCursor.moveToFirst();
 		}
 		return mCursor;
 	}
+    public Cursor getTodayItem(String dream_name,String date) throws SQLException {
+        Cursor mCursor = db.query(TABLE_NAME,
+                new String[] {"dream_name", "date", "delta_time", "rest_time", "waste_time",
+                        "goal_time","need_time","completed_goals"}, "dream_name='"+dream_name+"'"+"and date="+date, null,
+                null, null, null);
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+        return mCursor;
+    }
 
 	public boolean updateTitle( String dream_name,String date, String delta_time, String rest_time,
 			String waste_time,String goal_time,String need_time,String completed_goals) {
@@ -100,9 +110,15 @@ public class DBAdapter {
         cv.put("goal_time", goal_time);
         cv.put("need_time", need_time);
         cv.put("completed_goals", completed_goals);
-		return db.update(TABLE_NAME, cv,  "date=" + date, null) > 0;
+		return db.update(TABLE_NAME, cv,  "dream_name='"+dream_name+"'"+" and date=" + date, null) > 0;
 	}
+    public boolean updateToday( String dream_name,String date, String delta_time) {
+        ContentValues cv = new ContentValues();
 
+        cv.put("delta_time", delta_time);
+
+        return db.update(TABLE_NAME, cv,  "dream_name='"+dream_name+"'"+" and date=" + date, null) > 0;
+    }
     public  void setTableName(String tableName){
 
     }

@@ -280,7 +280,7 @@ public class AddDreamActivity extends BaseActivity implements View.OnClickListen
             }else{
                 d="0"+start.get(Calendar.DATE);
             }
-            db.insertItem(dreamName, start.get(Calendar.YEAR)+"-"+m+"-"+d, "0", restTime, xuduTime+"",goalTime,needTime,"0");
+            db.insertItem(dreamName, start.get(Calendar.YEAR)+"-"+m+"-"+d, "0", restTime, format(xuduTime)+"",goalTime,needTime,"0");
             start.add(Calendar.DATE, 1);
         }
         cursor.close();
