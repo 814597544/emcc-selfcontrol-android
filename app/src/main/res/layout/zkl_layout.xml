@@ -106,6 +106,7 @@
             android:layout_weight="1">
 
             <ImageView
+                android:id="@+id/img1"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:background="@drawable/cartoon_run"/>
@@ -133,6 +134,7 @@
             android:layout_weight="1">
 
             <ImageView
+                android:id="@+id/img2"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:background="@drawable/cartoon_run"
@@ -161,6 +163,7 @@
             android:layout_weight="1">
 
             <ImageView
+                android:id="@+id/img3"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:background="@drawable/cartoon_run"

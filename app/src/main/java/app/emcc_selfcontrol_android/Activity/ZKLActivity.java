@@ -35,16 +35,13 @@ import com.nineoldandroids.animation.Animator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.viewpagerindicator.CirclePageIndicator;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
- * @author Adil Soomro
- *
- */
+
 public class ZKLActivity extends BaseActivity implements View.OnClickListener{
     private  String mcurDate;
     private  Calendar curDate,tempDate;
@@ -58,38 +55,33 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
     private DoubleClickExitHelper mDoubleClickExitHelper;
     private DBAdapter db;
     private  boolean hasTask= false;
-    private TimerTask task = null;
-    private Timer time = null;
     private MyAPP myAPP;
-    boolean test=false;
-    MyBindService.MyBinder binder;
-
     private CircularInnerViewActivity mCircularInnerViewActivity;
     private UpdateState mCallBack;
+    private TimerTask task = null;
+    private Timer time = null	;
+    boolean test=false;
+    private int deltaTime,goalTime,needTime;
+    private Boolean isBinder=false;
+    private int totalDeltaTime=0;
+    private ImageView img1,img2,img3;
+
     /**
      * The animation time in milliseconds that we take to display the steps taken
      */
     private static final int BAR_ANIMATION_TIME = 1000;
-    private int progress2 = 5;
-
+    MyBindService.MyBinder binder;
 
     private ServiceConnection connection = new ServiceConnection() {
         @Override
         public void onServiceDisconnected(ComponentName name) {
+            binder=null;
         }
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            // 取得Service对象中的Binder对象
             binder = (MyBindService.MyBinder) service;
         }
     };
-
-
-
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +91,7 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
         IntentFilter filter = new IntentFilter();
         filter.addAction("zkl.add.dream");
         registerReceiver(myReceiver, filter);
+
         db=new DBAdapter(ZKLActivity.this);
         myAPP=(MyAPP)getApplication();
         dream_time=(TextView) findViewById(R.id.dream_time);
@@ -106,47 +99,37 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
         waste_time=(TextView) findViewById(R.id.waste_time);
         titleName=(TextView) findViewById(R.id.title);
         titleName.setText("自控力");
+        show_finishtime=(TextView) findViewById(R.id.show_finishtime);
+
         circleIcon=(CircleImageView) findViewById(R.id.circleIcon);
         circleIcon.setOnClickListener(this);
         addDream=(ImageView) findViewById(R.id.add);
         addDream.setOnClickListener(this);
-        show_finishtime=(TextView) findViewById(R.id.show_finishtime);
         start_dream=(ImageView) findViewById(R.id.start_dream);
         start_dream.setOnClickListener(this);
         stop_dream=(ImageView) findViewById(R.id.stop_dream);
         stop_dream.setOnClickListener(this);
-        no_task=(ImageView) findViewById(R.id.stop_dream);
+        no_task=(ImageView) findViewById(R.id.no_task);
         no_task.setOnClickListener(this);
-
+        img1=(ImageView) findViewById(R.id.img1);
+        img2=(ImageView) findViewById(R.id.img2);
+        img3=(ImageView) findViewById(R.id.img3);
         mDoubleClickExitHelper = new DoubleClickExitHelper(this);
 
         ImageLoader.getInstance().displayImage("https://coding.net/static/fruit_avatar/Fruit-1.png", circleIcon);
         progressTwo = (RoundCornerProgressBar) findViewById(R.id.progress_two);
         progressTwo.setBackgroundColor(getResources().getColor(R.color.main_color));
-
-        updateProgressTwo();
         initViews();
         init();
-
-
     }
 
-     private void init(){
-
-
-         if(!"".equals(SharePrefrerncesUtil.get(ZKLActivity.this,"dream_name",""))){
-             refresh();
-         }else{
-             addDream.setVisibility(View.VISIBLE);
-         }
-
-     }
-
-
-
-
-
-
+    private void init(){
+        if(!"".equals(SharePrefrerncesUtil.get(ZKLActivity.this,"dream_name",""))){
+            refresh();
+        }else{
+            addDream.setVisibility(View.VISIBLE);
+        }
+    }
 
     @Override
     public void onClick(View v) {
@@ -179,12 +162,10 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
         }
     }
 
-    private void updateProgressTwo() {
-        progressTwo.setProgress(progress2);
+    /*private void updateProgressTwo() {
         updateProgressTwoColor();
-    }
-
-    private void updateProgressTwoColor() {
+    }*/
+ /*   private void updateProgressTwoColor() {
         if(progress2 <= 3) {
             progressTwo.setProgressColor(getResources().getColor(R.color.custom_progress_red_progress));
         } else if(progress2 > 3 && progress2 <= 6) {
@@ -192,52 +173,36 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
         } else if(progress2 > 6) {
             progressTwo.setProgressColor(getResources().getColor(R.color.custom_progress_green_progress));
         }
-    }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mCircularBarPager.getCircularBar().animateProgress(0, 0, 1000);
-    }
+    }*/
 
     private void initViews(){
         mCircularBarPager = (CircularBarPager) findViewById(R.id.circularBarPager);
-
         View[] views = new View[1];
         mCircularInnerViewActivity = new CircularInnerViewActivity(this);
         views[0]=mCircularInnerViewActivity;
         mCallBack=(UpdateState)mCircularInnerViewActivity;
-       /* views[1] = new CircularInnerViewActivity(this);*/
-
         mCircularBarPager.setViewPagerAdapter(new CircularPagerAdapter(this, views));
-
         ViewPager viewPager = mCircularBarPager.getViewPager();
         viewPager.setClipToPadding(true);
-        /*aaaa*/
         CirclePageIndicator circlePageIndicator = mCircularBarPager.getCirclePageIndicator();
         circlePageIndicator.setFillColor(getResources().getColor(R.color.light_grey));
         circlePageIndicator.setPageColor(getResources().getColor(R.color.very_light_grey));
         circlePageIndicator.setStrokeColor(getResources().getColor(R.color.transparent));
 
-        //Do stuff based on animation
         mCircularBarPager.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
-
             }
 
             @Override
             public void onAnimationEnd(Animator animation) {
                 //TODO do stuff
             }
-
             @Override
             public void onAnimationCancel(Animator animation) {
-
             }
-
             @Override
             public void onAnimationRepeat(Animator animation) {
-
             }
         });
 
@@ -263,42 +228,44 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
     }
 
     private void start(){
+       /* refresh();*/
         mCallBack.updateDreamToole("暂停");
         start_dream.setVisibility(View.GONE);
         stop_dream.setVisibility(View.VISIBLE);
         final Intent intent = new Intent();
-        // 指定开启服务的action
         intent.setAction("com.emcc.zkl.furao");
-
-                /*@@@@@@@在普通的activity中绑定和解绑bindservice时用bindservice，但在Tab的activity中要用getApplicationContext().bindService@@@@@@@*/
         getApplicationContext().bindService(intent, connection, Context.BIND_AUTO_CREATE);
-        Log.e("start------","start");
+        isBinder=true;
+        todayFinish(totalDeltaTime);
         startTimer();
     }
 
     private void stop(){
+        db.open();
+        totalDeltaTime=totalDeltaTime+binder.getCount();
+        boolean b=  db.updateToday(SharePrefrerncesUtil.get(this,"dream_name","")+"",getStringDate(System.currentTimeMillis()),totalDeltaTime+"");
+        if(b){
+            Toast.makeText(ZKLActivity.this,"更新成功",Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(ZKLActivity.this,"更新失败",Toast.LENGTH_SHORT).show();
+        }
+        db.close();
         mCallBack.updateDreamToole("开始");
         start_dream.setVisibility(View.VISIBLE);
         stop_dream.setVisibility(View.GONE);
-        // 绑定服务到当前activity中
-
         stopTimer();
-        // 解除绑定
-        binder=null;
-        getApplicationContext().unbindService(connection);
+        if(isBinder) {
+            getApplicationContext().unbindService(connection);
+            isBinder=false;
+        }
+
     }
-    //启动定时器
     private void startTimer() {
-		/* 启动定时器，每5秒自动切换展示图 */
         if (task == null) {
             task = new TimerTask() {
                 @Override
                 public void run() {
-                    Log.e("******",binder.getCount()+"");
-                    progress2=10*(binder.getCount())/(36*1);
-                /* ------发送广播------*/
                     test=true;
-                    Log.e("$$$$$$$","progress2="+progress2);
                     Intent intent2 = new Intent();
                     intent2.setAction("zkl.add.dream");
                     sendBroadcast(intent2);
@@ -311,9 +278,8 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
         }
         time.schedule(task, 1000, 1000);
     }
-    //关闭定时器
+
     private void stopTimer() {
-		/* 暂停定时器 */
         if (task != null) {
             task.cancel();
             task = null;
@@ -322,85 +288,115 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
             time.cancel();
             time = null;
         }
+
     }
+
     private void refresh(){
-
-
-
         db.open();
-         cursor=db.getAllItem();
+        cursor=db.getAllItem();
         cursor.moveToFirst();
-         mcurDate=getStringDate(System.currentTimeMillis());
+        mcurDate=getStringDate(System.currentTimeMillis());
         if (cursor.getCount() > 0) {
-        if(mcurDate.equals(cursor.getString(cursor
-                .getColumnIndex("date")))){
-            hasTask=true;
-            showView();
-            dream_time.setText(cursor.getString(cursor
-                    .getColumnIndex("goal_time"))+"小时");
-            rest_time.setText(cursor.getString(cursor
-                    .getColumnIndex("rest_time"))+"小时");
-            waste_time.setText(cursor.getString(cursor
-                    .getColumnIndex("waste_time"))+"小时");
+            if(mcurDate.equals(cursor.getString(cursor
+                    .getColumnIndex("date")))&&SharePrefrerncesUtil.get(this,"dream_name","").equals(cursor.getString(cursor
+                    .getColumnIndex("dream_name")))){
+                hasTask=true;
+                showView();
+                dream_time.setText(SharePrefrerncesUtil.get(this,"everyday_goal","") + "小时");
+                rest_time.setText(SharePrefrerncesUtil.get(this, "everyday_rest", "")+"小时");
+                waste_time.setText(24-Double.parseDouble(SharePrefrerncesUtil.get(this, "everyday_rest", "")+"")-Double.parseDouble(SharePrefrerncesUtil.get(this, "everyday_goal", "")+"")+"小时");
+                needTime=(int)Double.parseDouble(cursor.getString(cursor
+                        .getColumnIndex("need_time")));
+                goalTime=(int)Double.parseDouble(cursor.getString(cursor
+                        .getColumnIndex("goal_time")));
+                goalTime=60;
+                deltaTime=(int)Double.parseDouble(cursor.getString(cursor
+                        .getColumnIndex("delta_time")));
+                totalDeltaTime=deltaTime;
+                todayFinish(deltaTime);
+                if("1".equals(cursor.getString(cursor
+                        .getColumnIndex("completed_goals")))){
+                    addDream.setVisibility(View.GONE);
+                    start_dream.setVisibility(View.GONE);
+                    stop_dream.setVisibility(View.GONE);
+                    addDream.setVisibility(View.GONE);
+                    no_task.setVisibility(View.VISIBLE);
+                    progressTwo.setProgress(10);
+                    img1.setVisibility(View.GONE);
+                    img2.setVisibility(View.GONE);
+                    img3.setVisibility(View.VISIBLE);
+                }else{
+                    progressTwo.setProgress((int)((totalDeltaTime)*1.0/60*10));
+                }
 
-            if("0".equals(cursor.getString(cursor
-                    .getColumnIndex("goal_time")))){
-                addDream.setVisibility(View.GONE);
-                start_dream.setVisibility(View.GONE);
-                stop_dream.setVisibility(View.GONE);
-                addDream.setVisibility(View.GONE);
-                no_task.setVisibility(View.VISIBLE);
-                progressTwo.setProgress(10);
 
-            }else{
-                progressTwo.setProgress((int)(getTime(cursor,"delta_time")/getTime(cursor,"need_time")*10));
             }
-
-            cursor.close();
-            db.close();
-        }
-        else {
+            else {
 
                 while (cursor.moveToNext()) {
 
                     if(mcurDate.equals(cursor.getString(cursor
-                            .getColumnIndex("date")))){
+                            .getColumnIndex("date")))&&SharePrefrerncesUtil.get(this,"dream_name","").equals(cursor.getString(cursor
+                            .getColumnIndex("dream_name")))){
                         hasTask=true;
+
                         showView();
-                        dream_time.setText(cursor.getString(cursor
-                                .getColumnIndex("goal_time")) + "小时");
-                        rest_time.setText(cursor.getString(cursor
-                                .getColumnIndex("rest_time")) + "小时");
-                        waste_time.setText(cursor.getString(cursor
-                                .getColumnIndex("waste_time")) + "小时");
-                        if ("0".equals(cursor.getString(cursor
-                                .getColumnIndex("goal_time")))) {
+                        dream_time.setText(SharePrefrerncesUtil.get(this, "everyday_goal", "") + "小时");
+                        rest_time.setText(SharePrefrerncesUtil.get(this, "everyday_rest", "")+"小时");
+                        waste_time.setText(SharePrefrerncesUtil.get(this, "everyday_rest", "")+"小时");
+                        needTime=(int)Double.parseDouble(cursor.getString(cursor
+                                .getColumnIndex("need_time")));
+                        goalTime=(int)Double.parseDouble(cursor.getString(cursor
+                                .getColumnIndex("goal_time")));
+                        goalTime=60;
+                        deltaTime=(int)Double.parseDouble(cursor.getString(cursor
+                                .getColumnIndex("delta_time")));
+                        totalDeltaTime=deltaTime;
+                        todayFinish(deltaTime);
+                        if ("1".equals(cursor.getString(cursor
+                                .getColumnIndex("completed_goals")))) {
                             addDream.setVisibility(View.GONE);
                             start_dream.setVisibility(View.GONE);
                             stop_dream.setVisibility(View.GONE);
                             addDream.setVisibility(View.GONE);
                             no_task.setVisibility(View.VISIBLE);
+                            img1.setVisibility(View.GONE);
+                            img2.setVisibility(View.GONE);
+                            img3.setVisibility(View.VISIBLE);
                             progressTwo.setProgress(10);
 
                         } else {
-                            progressTwo.setProgress((int)(getTime(cursor,"delta_time")/getTime(cursor,"need_time")*10));
+                            progressTwo.setProgress((int)((totalDeltaTime)*1.0/60*10));
                         }
                         break;
                     }
                 }
+
+            }
+            if (hasTask) {
+                cursor = db.getItem(SharePrefrerncesUtil.get(this, "dream_name", "") + "");
+                int x = (int) Double.parseDouble(cursor.getString(cursor
+                        .getColumnIndex("delta_time")));
+                while (cursor.moveToNext()) {
+                    x += (int) Double.parseDouble(cursor.getString(cursor
+                            .getColumnIndex("delta_time")));
+                }
+                x = (int) (x * 1.0) / 60*100;
+
+                mCircularBarPager.getCircularBar().animateProgress(20, 100, 1000);
+            }
+
             cursor.close();
             db.close();
-        }
         }
 
         if(!hasTask){
             addDream.setVisibility(View.GONE);
             no_task.setVisibility(View.VISIBLE);
+
             dream_time.setText("0小时");
             rest_time.setText("24小时");
             waste_time.setText("0小时");
-
-
         }
 
     }
@@ -409,10 +405,33 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
         public void onReceive(final Context context, Intent intent) {
 
             if (test==true) {
-                todayFinish(binder.getCount());
-                progressTwo.setProgress(progress2);
-                updateProgressTwoColor();
-            }else{refresh();}
+                todayFinish(binder.getCount() + totalDeltaTime);
+                progressTwo.setProgress((int)((binder.getCount()+totalDeltaTime)*1.0/60*10));
+                if ((binder.getCount() + totalDeltaTime)>=(goalTime/2)){
+                    img1.setVisibility(View.GONE);
+                    img2.setVisibility(View.VISIBLE);
+                    img3.setVisibility(View.GONE);
+                }
+                if ((binder.getCount() + totalDeltaTime)>=goalTime){
+                    stopTimer();
+                    if(isBinder) {
+                        db.open();
+                        db.completedGoal(SharePrefrerncesUtil.get(ZKLActivity.this,"dream_name","")+"",getStringDate(System.currentTimeMillis()),"1");
+                        db.updateToday(SharePrefrerncesUtil.get(ZKLActivity.this,"dream_name","")+"",getStringDate(System.currentTimeMillis()),(binder.getCount() + totalDeltaTime-1)+"");
+                        db.close();
+                        getApplicationContext().unbindService(connection);
+                        isBinder=false;
+                        start_dream.setVisibility(View.GONE);
+                        stop_dream.setVisibility(View.GONE);
+                        no_task.setVisibility(View.VISIBLE);
+                        img1.setVisibility(View.GONE);
+                        img2.setVisibility(View.GONE);
+                        img3.setVisibility(View.VISIBLE);
+                    }
+                }
+            }else{
+                refresh();
+            }
 
         }
     }
@@ -423,18 +442,40 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
 
         return dateString;
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(myReceiver);
+        stopTimer();
+        if(isBinder) {
+            db.open();
+            totalDeltaTime=totalDeltaTime+binder.getCount();
+            boolean b=  db.updateToday(SharePrefrerncesUtil.get(this,"dream_name","")+"",getStringDate(System.currentTimeMillis()),totalDeltaTime-1+"");
+            if(b){
+                Toast.makeText(ZKLActivity.this,"更新成功",Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(ZKLActivity.this,"更新失败",Toast.LENGTH_SHORT).show();
+            }
+            db.close();
+            getApplicationContext().unbindService(connection);
+            isBinder=false;
+        }
     }
-private void showView(){
-    start_dream.setVisibility(View.VISIBLE);
-    stop_dream.setVisibility(View.GONE);
-    addDream.setVisibility(View.GONE);
-    no_task.setVisibility(View.GONE);
-    mCircularBarPager.setVisibility(View.VISIBLE);
-}
+    private void showView(){
+        start_dream.setVisibility(View.VISIBLE);
+        stop_dream.setVisibility(View.GONE);
+        addDream.setVisibility(View.GONE);
+        no_task.setVisibility(View.GONE);
+        mCircularBarPager.setVisibility(View.VISIBLE);
+    }
     /**
      * 监听返回--是否退出程序
      */
@@ -453,10 +494,13 @@ private void showView(){
         double time=Double.parseDouble(cursor.getString(cursor
                 .getColumnIndex(key)));
 
-            return time;
+        return time;
     }
-
-
+    public double format(double f){
+        BigDecimal b   =   new   BigDecimal(f);
+        double   f1   =   b.setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
+        return f1;
+    }
     private void todayFinish(int time){
         int H=time/3600;
         int M=(time%3600)/60;
@@ -467,4 +511,5 @@ private void showView(){
         if (S<10){SS="0"+S;}else{SS=""+S;}
         show_finishtime.setText(HH+":"+MM+":"+SS);
     }
+
 }

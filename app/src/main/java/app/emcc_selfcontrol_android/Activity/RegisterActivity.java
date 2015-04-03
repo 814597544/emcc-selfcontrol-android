@@ -63,9 +63,10 @@ public class RegisterActivity extends BaseActivity implements
                 }else if (!passWord.equals(passWord2)){
                     Toast.makeText(RegisterActivity.this, "密码不一致！", Toast.LENGTH_SHORT).show();
                 }else{
+                    dialog1.show();
                     new Thread() {
                         public void run() {
-                            dialog1.show();
+
                             Message msg = new Message();
                             try {
                                 Messages m = appContext.register(userName, passWord,userEmail);

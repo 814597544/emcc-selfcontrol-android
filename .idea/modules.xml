@@ -9,7 +9,6 @@
       <module fileurl="file://$PROJECT_DIR$/circular/circular.iml" filepath="$PROJECT_DIR$/circular/circular.iml" />
       <module fileurl="file://$PROJECT_DIR$/emcc-selfcontrol-android.iml" filepath="$PROJECT_DIR$/emcc-selfcontrol-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
-      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/progressLibrary/progressLibrary.iml" filepath="$PROJECT_DIR$/progressLibrary/progressLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/tabLibrary/tabLibrary.iml" filepath="$PROJECT_DIR$/tabLibrary/tabLibrary.iml" />
     </modules>

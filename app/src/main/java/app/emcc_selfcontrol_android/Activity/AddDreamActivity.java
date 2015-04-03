@@ -243,7 +243,7 @@ public class AddDreamActivity extends BaseActivity implements View.OnClickListen
         SharePrefrerncesUtil.put(this,"end_rili_Time",endRili);
         SharePrefrerncesUtil.put(this, "start_rili_Time",startRili);
 
-        initDataBase(dreamName,goalTime,restTime,needTime,startRili,endRili);
+        initDataBase(dreamName,Double.parseDouble(goalTime)*3600+"",Double.parseDouble(restTime)*3600+"",Double.parseDouble(needTime)*3600+"",startRili,endRili);
 
         Intent intent = new Intent();
         intent.setAction("zkl.add.dream");
@@ -280,7 +280,7 @@ public class AddDreamActivity extends BaseActivity implements View.OnClickListen
             }else{
                 d="0"+start.get(Calendar.DATE);
             }
-            db.insertItem(dreamName, start.get(Calendar.YEAR)+"-"+m+"-"+d, "0", restTime, format(xuduTime)+"",goalTime,needTime,"0");
+            db.insertItem(dreamName, start.get(Calendar.YEAR)+"-"+m+"-"+d, "0", restTime, format(xuduTime)*3600+"",goalTime,needTime,"0");
             start.add(Calendar.DATE, 1);
         }
         cursor.close();

@@ -110,15 +110,22 @@ public class DBAdapter {
         cv.put("goal_time", goal_time);
         cv.put("need_time", need_time);
         cv.put("completed_goals", completed_goals);
-		return db.update(TABLE_NAME, cv,  "dream_name='"+dream_name+"'"+" and date=" + date, null) > 0;
+        return db.update(TABLE_NAME, cv,  "dream_name='"+dream_name+"'"+" and date='" + date+"'", null) > 0;
 	}
     public boolean updateToday( String dream_name,String date, String delta_time) {
         ContentValues cv = new ContentValues();
-
+        Log.v("----updateToday---totalDeltaTime",delta_time+"");
         cv.put("delta_time", delta_time);
 
-        return db.update(TABLE_NAME, cv,  "dream_name='"+dream_name+"'"+" and date=" + date, null) > 0;
+        return db.update(TABLE_NAME, cv,  "dream_name='"+dream_name+"'"+" and date='" + date+"'", null) > 0;
     }
+
+    public boolean completedGoal( String dream_name,String date, String completed_goals) {
+        ContentValues cv = new ContentValues();
+        cv.put("completed_goals", completed_goals);
+        return db.update(TABLE_NAME, cv,  "dream_name='"+dream_name+"'"+" and date='" + date+"'", null) > 0;
+    }
+
     public  void setTableName(String tableName){
 
     }
