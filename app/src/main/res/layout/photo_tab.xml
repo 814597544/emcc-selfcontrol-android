@@ -85,7 +85,7 @@
                         android:orientation="horizontal"
                         android:gravity="center">
                         <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
-                            android:id="@+id/progress_two"
+                            android:id="@+id/progress1"
                             android:layout_width="fill_parent"
                             android:layout_height="16dp"
                             android:layout_marginLeft="5dp"
@@ -129,8 +129,9 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:textColor="#037083"
-                android:text="梦想"
-                android:layout_marginRight="5dp"/>
+                android:text="休息"
+                android:layout_marginRight="5dp"
+                 />
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -147,6 +148,7 @@
                     android:orientation="horizontal"
                     android:gravity="center">
                     <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+                        android:id="@+id/progress2"
                         android:layout_width="fill_parent"
                         android:layout_height="16dp"
                         android:layout_marginLeft="5dp"
@@ -190,8 +192,9 @@
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
                     android:textColor="#037083"
-                    android:text="梦想"
-                    android:layout_marginRight="5dp"/>
+                    android:text="虚度"
+                    android:layout_marginRight="5dp"
+                     />
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -208,6 +211,7 @@
                         android:orientation="vertical"
                         android:gravity="center">
                         <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+                            android:id="@+id/progress3"
                             android:layout_width="fill_parent"
                             android:layout_height="16dp"
                             android:layout_marginLeft="5dp"

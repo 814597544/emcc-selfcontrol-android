@@ -43,9 +43,6 @@ public class AddDreamActivity extends BaseActivity implements View.OnClickListen
     private static final int START_RILI=1;
     private static final int END_RILI=2;
     private int betweenDays;
-    private int MIN_VALUE=1;
-    private int MAX_VALUE=24;
-    private int totalTime;
     private String startData,endData;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,9 +124,12 @@ public class AddDreamActivity extends BaseActivity implements View.OnClickListen
                     endData=getStringDate(date);
                     int j=Integer.parseInt(need_time.getText().toString())/24;
                     int i=Integer.parseInt(need_time.getText().toString())%24==0?j:j+1;
+
+
                     if(daysBetween(startData, endData)>=i){
                         end_rili_value.setText(getStringDate(date));
                         calculate(startData,endData);
+
                     }else {
 
                         Toast.makeText(getApplicationContext(),"时间范围不低于"+i+"天",Toast.LENGTH_SHORT).show();
@@ -203,6 +203,10 @@ public class AddDreamActivity extends BaseActivity implements View.OnClickListen
         try {
             betweenDays=daysBetween(startData, endData);
             double d=Double.parseDouble(need_time.getText().toString())/betweenDays;
+            if(d<0.5){
+                Toast.makeText(getApplicationContext(),"每天梦想不低于0.5小时",Toast.LENGTH_SHORT).show();
+                return;
+            }
             mgoal_view.setText(format(d)+"");
             if(24-format(d)>=12){
                 rest_time.setText("12");
@@ -254,22 +258,18 @@ public class AddDreamActivity extends BaseActivity implements View.OnClickListen
 
     private void initDataBase(final String dreamName,final String goalTime,final String restTime,final String needTime,final String startTime, final String endTime){
 
-        Log.v("--start_time="+startTime,"--------------------");
         Calendar start = Calendar.getInstance();
         Calendar end = Calendar.getInstance();
         int[] date = parseTime(startTime);
         start.set(date[0], date[1], date[2]);
-        Log.v("s--date[0]="+date[0]+"-"+date[1]+"-"+date[2],"--------------------");
         date = parseTime(endTime);
         end.set(date[0], date[1], date[2]);
         db.open();
         Cursor cursor = null;
         cursor = db.getAllItem();
-        Log.v("e--date[0]="+date[0]+"-"+date[1]+"-"+date[2],"--------------------");
-        double xuduTime=24-Double.parseDouble(goalTime)-Double.parseDouble(restTime);
+        double xuduTime=24*3600-Double.parseDouble(goalTime)-Double.parseDouble(restTime);
         String m ,d;
-        while(start.before(end)){
-            System.out.println(start.get(Calendar.YEAR)+"-"+start.get(Calendar.MONTH)+"-"+start.get(Calendar.DATE));
+        while(start.before(end)||start.equals(end)){
             if(start.get(Calendar.MONTH)>9){
                 m=start.get(Calendar.MONTH)+"";
             }else{

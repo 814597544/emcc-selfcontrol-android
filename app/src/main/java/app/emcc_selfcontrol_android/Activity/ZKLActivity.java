@@ -36,6 +36,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Timer;
@@ -61,9 +62,10 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
     private TimerTask task = null;
     private Timer time = null	;
     boolean test=false;
-    private int deltaTime,goalTime,needTime;
+    private int deltaTime,goalTime,needTime,recordTime;
     private Boolean isBinder=false;
     private int totalDeltaTime=0;
+    private boolean firstStart=true;
     private ImageView img1,img2,img3;
 
     /**
@@ -119,6 +121,7 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
         ImageLoader.getInstance().displayImage("https://coding.net/static/fruit_avatar/Fruit-1.png", circleIcon);
         progressTwo = (RoundCornerProgressBar) findViewById(R.id.progress_two);
         progressTwo.setBackgroundColor(getResources().getColor(R.color.main_color));
+        progressTwo.setProgressColor(getResources().getColor(R.color.custom_progress_orange_progress));
         initViews();
         init();
     }
@@ -165,11 +168,11 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
     /*private void updateProgressTwo() {
         updateProgressTwoColor();
     }*/
- /*   private void updateProgressTwoColor() {
+  /*  private void updateProgressTwoColor() {
         if(progress2 <= 3) {
             progressTwo.setProgressColor(getResources().getColor(R.color.custom_progress_red_progress));
         } else if(progress2 > 3 && progress2 <= 6) {
-            progressTwo.setProgressColor(getResources().getColor(R.color.custom_progress_orange_progress));
+
         } else if(progress2 > 6) {
             progressTwo.setProgressColor(getResources().getColor(R.color.custom_progress_green_progress));
         }
@@ -228,7 +231,6 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
     }
 
     private void start(){
-       /* refresh();*/
         mCallBack.updateDreamToole("暂停");
         start_dream.setVisibility(View.GONE);
         stop_dream.setVisibility(View.VISIBLE);
@@ -296,10 +298,20 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
         cursor=db.getAllItem();
         cursor.moveToFirst();
         mcurDate=getStringDate(System.currentTimeMillis());
+        Log.v("----------------cursor.getCount()---"+cursor.getCount(),"0");
+       /* Log.v("------------SharePrefrerncesUtil----dream_name---"+SharePrefrerncesUtil.get(this,"dream_name",""),"0");
+        Log.v("----------cursor------date---"+cursor.getString(cursor
+                .getColumnIndex("date")),"0");
+
+
+        Log.v("----------cursor------dream_name---"+cursor.getString(cursor
+                .getColumnIndex("dream_name")),"0");*/
         if (cursor.getCount() > 0) {
             if(mcurDate.equals(cursor.getString(cursor
                     .getColumnIndex("date")))&&SharePrefrerncesUtil.get(this,"dream_name","").equals(cursor.getString(cursor
                     .getColumnIndex("dream_name")))){
+
+
                 hasTask=true;
                 showView();
                 dream_time.setText(SharePrefrerncesUtil.get(this,"everyday_goal","") + "小时");
@@ -309,7 +321,6 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
                         .getColumnIndex("need_time")));
                 goalTime=(int)Double.parseDouble(cursor.getString(cursor
                         .getColumnIndex("goal_time")));
-                goalTime=60;
                 deltaTime=(int)Double.parseDouble(cursor.getString(cursor
                         .getColumnIndex("delta_time")));
                 totalDeltaTime=deltaTime;
@@ -326,7 +337,7 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
                     img2.setVisibility(View.GONE);
                     img3.setVisibility(View.VISIBLE);
                 }else{
-                    progressTwo.setProgress((int)((totalDeltaTime)*1.0/60*10));
+                    progressTwo.setProgress(progressSize(totalDeltaTime,goalTime));
                 }
 
 
@@ -339,16 +350,15 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
                             .getColumnIndex("date")))&&SharePrefrerncesUtil.get(this,"dream_name","").equals(cursor.getString(cursor
                             .getColumnIndex("dream_name")))){
                         hasTask=true;
-
+                        Log.v("-------------------","1");
                         showView();
                         dream_time.setText(SharePrefrerncesUtil.get(this, "everyday_goal", "") + "小时");
                         rest_time.setText(SharePrefrerncesUtil.get(this, "everyday_rest", "")+"小时");
-                        waste_time.setText(SharePrefrerncesUtil.get(this, "everyday_rest", "")+"小时");
+                        waste_time.setText(24-Double.parseDouble(SharePrefrerncesUtil.get(this, "everyday_rest", "")+"")-Double.parseDouble(SharePrefrerncesUtil.get(this, "everyday_goal", "")+"")+"小时");
                         needTime=(int)Double.parseDouble(cursor.getString(cursor
                                 .getColumnIndex("need_time")));
                         goalTime=(int)Double.parseDouble(cursor.getString(cursor
                                 .getColumnIndex("goal_time")));
-                        goalTime=60;
                         deltaTime=(int)Double.parseDouble(cursor.getString(cursor
                                 .getColumnIndex("delta_time")));
                         totalDeltaTime=deltaTime;
@@ -366,28 +376,21 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
                             progressTwo.setProgress(10);
 
                         } else {
-                            progressTwo.setProgress((int)((totalDeltaTime)*1.0/60*10));
+                            progressTwo.setProgress(progressSize(totalDeltaTime,goalTime));
                         }
                         break;
                     }
                 }
 
             }
-            if (hasTask) {
-                cursor = db.getItem(SharePrefrerncesUtil.get(this, "dream_name", "") + "");
-                int x = (int) Double.parseDouble(cursor.getString(cursor
-                        .getColumnIndex("delta_time")));
-                while (cursor.moveToNext()) {
-                    x += (int) Double.parseDouble(cursor.getString(cursor
-                            .getColumnIndex("delta_time")));
-                }
-                x = (int) (x * 1.0) / 60*100;
-
-                mCircularBarPager.getCircularBar().animateProgress(20, 100, 1000);
-            }
 
             cursor.close();
             db.close();
+
+            if (hasTask) {
+            updateTotalProgress();
+            }
+
         }
 
         if(!hasTask){
@@ -404,9 +407,11 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
         @Override
         public void onReceive(final Context context, Intent intent) {
 
-            if (test==true) {
+            if (test) {
+                test=false;
                 todayFinish(binder.getCount() + totalDeltaTime);
-                progressTwo.setProgress((int)((binder.getCount()+totalDeltaTime)*1.0/60*10));
+                progressTwo.setProgress(progressSize(binder.getCount()+totalDeltaTime,goalTime));
+                updateTotalProgress();
                 if ((binder.getCount() + totalDeltaTime)>=(goalTime/2)){
                     img1.setVisibility(View.GONE);
                     img2.setVisibility(View.VISIBLE);
@@ -416,8 +421,7 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
                     stopTimer();
                     if(isBinder) {
                         db.open();
-                        db.completedGoal(SharePrefrerncesUtil.get(ZKLActivity.this,"dream_name","")+"",getStringDate(System.currentTimeMillis()),"1");
-                        db.updateToday(SharePrefrerncesUtil.get(ZKLActivity.this,"dream_name","")+"",getStringDate(System.currentTimeMillis()),(binder.getCount() + totalDeltaTime-1)+"");
+                        db.completedGoal(SharePrefrerncesUtil.get(ZKLActivity.this, "dream_name", "") + "", getStringDate(System.currentTimeMillis()), (binder.getCount() + totalDeltaTime) + "", "1");
                         db.close();
                         getApplicationContext().unbindService(connection);
                         isBinder=false;
@@ -430,6 +434,8 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
                     }
                 }
             }else{
+                totalDeltaTime=0;
+                hasTask= false;
                 refresh();
             }
 
@@ -512,4 +518,60 @@ public class ZKLActivity extends BaseActivity implements View.OnClickListener{
         show_finishtime.setText(HH+":"+MM+":"+SS);
     }
 
+    private int progressSize(int cur,int total){
+
+        NumberFormat numberFormat = NumberFormat.getInstance();
+
+        // 设置精确到小数点后2位
+        numberFormat.setMaximumFractionDigits(2);
+        String result = numberFormat.format(format2((double)cur/(double)total*100));
+        return  Integer.parseInt(result);
+    }
+
+    public double format2(double f){
+        BigDecimal b   =   new   BigDecimal(f);
+        double   f1   =   b.setScale(0,   BigDecimal.ROUND_HALF_UP).doubleValue();
+        return f1;
+    }
+
+
+    private void updateTotalProgress() {
+        int y=0;
+
+
+        if (firstStart) {
+            db.open();
+            int x = 0;
+            firstStart=false;
+            cursor = db.getItemByName(SharePrefrerncesUtil.get(this, "dream_name", "") + "");
+            if (!mcurDate.equals(cursor.getString(cursor
+                    .getColumnIndex("date"))))
+            {
+                while (cursor.moveToNext()) {
+                    if (mcurDate.equals(cursor.getString(cursor
+                            .getColumnIndex("date")))) {
+
+                    } else {
+                        x += Integer.parseInt(cursor.getString(cursor
+                                .getColumnIndex("delta_time")));
+                    }
+                }
+                recordTime=x;
+            }else {
+                recordTime = 0;
+            }
+
+            db.close();
+        }
+if (binder!=null) {
+    y = recordTime + totalDeltaTime + binder.getCount();
+}else {
+    y = recordTime + totalDeltaTime;
+
+}
+        int z=y>0?y-1:0;
+            mCircularBarPager.getCircularBar().animateProgress(progressSize(z, needTime), progressSize(y, needTime), 1000);
+
+
+    }
 }
